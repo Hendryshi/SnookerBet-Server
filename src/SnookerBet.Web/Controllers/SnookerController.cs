@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 namespace SnookerBet.Web.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
-	public class WeatherForecastController : ControllerBase
+	[Route("api/snooker")]
+	public class SnookerController : ControllerBase
 	{
 		private static readonly string[] Summaries = new[]
 		{
 			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 		};
 
-		private readonly ILogger<WeatherForecastController> _logger;
+		private readonly ILogger<SnookerController> _logger;
 
-		public WeatherForecastController(ILogger<WeatherForecastController> logger)
+		public SnookerController(ILogger<SnookerController> logger)
 		{
 			_logger = logger;
 		}

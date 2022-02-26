@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace MovieManager.Infrastructure.Logging
+namespace SnookerBet.Infrastructure.Logging
 {
     public class LoggerAdapter<T> : IAppLogger<T>
     {

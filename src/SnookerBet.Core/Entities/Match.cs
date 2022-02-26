@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Dapper.Contrib.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,40 +8,32 @@ using System.Threading.Tasks;
 
 namespace SnookerBet.Core.Entities
 {
-	public class Match
+	[Table("S_Match")]
+	public class Match : BaseEntity
 	{
+		[ExplicitKey]
 		[JsonProperty("ID")]
-		public int IdMatch;
+		public int IdMatch { get; set; }
 		[JsonProperty("EventID")]
-		public int IdEvent;
+		public int IdEvent { get; set; }
 		[JsonProperty("Round")]
-		public int IdRound;
-		[JsonProperty("Number")]
-		public int IdNumber;
-		public int WorldSnookerID;
-		[JsonProperty("Player1ID")]
-		public int IdPlayer1;
-		public int Score1;
-		[JsonProperty("Player2ID")]
-		public int IdPlayer2;
-		public int Score2;
-		[JsonProperty("WinnerID")]
-		public int IdWinner;
-		[JsonProperty("Unfinished")]
-		public bool UnFinished;
-		public int Status; //0: unfinised 1: ongoing 2:finised
-		[JsonProperty("StartDate")]
-		public DateTime? DtStart;
-		[JsonProperty("EndDate")]
-		public DateTime? DtEnd;
-		[JsonProperty("ScheduledDate")]
-		public DateTime? DtSchedule;
-		public string Sessions;
-		private string score;
-		private string player1Name;
-		private string player2Name;
-		private string winnerName;
-		public string Note;
-
+		public int IdRound { get; set; }
+		public int Number { get; set; }
+		public int Player1Id { get; set; }
+		public int? Score1 { get; set; }
+		public int Player2Id { get; set; }
+		public int? Score2 { get; set; }
+		public int? WinnerId { get; set; }
+		public bool Unfinished { get; set; } = true;
+		public bool OnBreak { get; set; } = false;
+		public DateTime? InitDate { get; set; }
+		public DateTime? ModDate { get; set; }
+		public DateTime? StartDate { get; set; }
+		public DateTime? EndDate { get; set; }
+		public DateTime? ScheduledDate { get; set; }
+		public string note { get; set; }
+		public string extendedNote { get; set; }
+		[JsonIgnore]
+		public DateTime? DtUpdate { get; set; }
 	}
 }

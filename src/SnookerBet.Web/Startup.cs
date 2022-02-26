@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MovieManagerWeb;
+using Serilog;
+using SnookerBet.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +54,10 @@ namespace SnookerBet.Web
 				.UseDefaultTypeSerializer()
 				.UseMemoryStorage());
 
+			//TODO: Change to hangfireSql
 			services.AddHangfireServer();
+
+			services.AddInfrastructureInjection(_config);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +73,8 @@ namespace SnookerBet.Web
 			app.UseRouting();
 
 			app.UseAuthorization();
+
+			app.UseSerilogRequestLogging();
 
 			app.UseEndpoints(endpoints =>
 			{

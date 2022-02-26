@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnookerBet.Infrastructure",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FB3D4001-DA41-401C-8D7D-505F8B660D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{23BB8EB5-C77F-4AE2-80B1-E6AFCD1E0304}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{23BB8EB5-C77F-4AE2-80B1-E6AFCD1E0304}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{7ED0DF49-E11A-4895-9B00-523E472BFB6B}"
+	ProjectSection(SolutionItems) = preProject
+		sql\Tables.sql = sql\Tables.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
