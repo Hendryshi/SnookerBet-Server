@@ -86,19 +86,19 @@ CREATE TABLE S_Match
 
 
 
-update S_Player set chineseName = 'Èû¶û±È' where idPlayer = 17
-update S_Player set chineseName = '°ÂÉ³ÀûÎÄ' where idPlayer = 5
-update S_Player set chineseName = 'ÌØÂ³Ä·ÆÕ' where idPlayer = 12
-update S_Player set chineseName = 'Äá¶û¡¤ÂŞ²®Ñ·' where idPlayer = 154
-update S_Player set chineseName = '¿­Â×¡¤Íş¶ûÑ·' where idPlayer = 39
-update S_Player set chineseName = 'Ï£½ğË¹' where idPlayer = 237
-update S_Player set chineseName = 'ÕÔĞÄÍ¯' where idPlayer = 946
-update S_Player set chineseName = 'Âí¿Ë¡¤ÍşÁ®Ä·Ë¹' where idPlayer = 1
-update S_Player set chineseName = '»ô½ğË¹' where idPlayer = 16
-update S_Player set chineseName = 'Ä«·Æ' where idPlayer = 97
-update S_Player set chineseName = 'Âí¿Ë°¬Â×' where idPlayer = 202
-update S_Player set chineseName = 'Âí¿ü¶û' where idPlayer = 2
-update S_Player set chineseName = 'ÑÕ±şÌÎ' where idPlayer = 1260
-update S_Player set chineseName = '±öººÄ·' where idPlayer = 30
-update S_Player set chineseName = 'Âó¿Ë¼ª¶û' where idPlayer = 22
-update S_Player set chineseName = 'Â¬¿¨¡¤²¼À×ÇĞ¶û' where idPlayer = 101
+update S_Player set chineseName = 'Èû¶û±È', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1597.png' where idPlayer = 17
+update S_Player set chineseName = '°ÂÉ³ÀûÎÄ', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1395.png' where idPlayer = 5
+update S_Player set chineseName = 'ÌØÂ³Ä·ÆÕ', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/24.png' where idPlayer = 12
+update S_Player set chineseName = 'Äá¶û¡¤ÂŞ²®Ñ·', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1560.png' where idPlayer = 154
+update S_Player set chineseName = '¿­Â×¡¤Íş¶ûÑ·', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2729.png' where idPlayer = 39
+update S_Player set chineseName = 'Ï£½ğË¹', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1347.png' where idPlayer = 237
+update S_Player set chineseName = 'ÕÔĞÄÍ¯', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39470.png' where idPlayer = 946
+update S_Player set chineseName = 'Âí¿Ë¡¤ÍşÁ®Ä·Ë¹', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1335.png' where idPlayer = 1
+update S_Player set chineseName = '»ô½ğË¹', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/835.png' where idPlayer = 16
+update S_Player set chineseName = 'Ä«·Æ', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/511.png' where idPlayer = 97
+update S_Player set chineseName = 'Âí¿Ë°¬Â×', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/799.png' where idPlayer = 202
+update S_Player set chineseName = 'Âí¿ü¶û', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/517.png' where idPlayer = 2
+update S_Player set chineseName = 'ÑÕ±şÌÎ', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/40273.png' where idPlayer = 1260
+update S_Player set chineseName = '±öººÄ·', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/743.png' where idPlayer = 30
+update S_Player set chineseName = 'Âó¿Ë¼ª¶û', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2715.png' where idPlayer = 22
+update S_Player set chineseName = 'Â¬¿¨¡¤²¼À×ÇĞ¶û', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2709.png' where idPlayer = 101

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MovieManagerWeb;
 using Serilog;
+using SnookerBet.Core;
 using SnookerBet.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace SnookerBet.Web
 			services.AddHangfireServer();
 
 			services.AddInfrastructureInjection(_config);
+			services.AddCoreInjection();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

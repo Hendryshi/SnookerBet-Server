@@ -29,6 +29,8 @@ namespace SnookerBet.Core.Entities
 		public int? LastSeasonAsPro { get; set; }
 		[JsonIgnore]
 		public int? SeasonRank { get; set; }
+		[JsonIgnore]
+		[Computed]
 		public string Photo { get; set; }
 		[JsonIgnore]
 		public DateTime DtUpdate { get; set; }
@@ -39,5 +41,13 @@ namespace SnookerBet.Core.Entities
 		public int PlayerId { get; set; }
 		public int Position { get; set; }
 		public int Sum { get; set; }
+	}
+
+	public class oPlayer
+	{
+		public int IdPlayer { get; set; }
+		public string Name { get; set; }
+		public int? Rank { get; set; }
+		public string Photo { get; set; }
 	}
 }

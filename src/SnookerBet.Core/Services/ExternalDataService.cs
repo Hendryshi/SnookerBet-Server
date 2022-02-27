@@ -37,7 +37,7 @@ namespace SnookerBet.Core.Services
 				if(response.IsSuccessStatusCode)
 				{
 					result = JsonConvert.DeserializeObject<List<T>>(response.Content.ReadAsStringAsync().Result);
-					_logger?.LogInformation(string.Format("Successfully getting data from the API. Count returned: {0}", result?.Count() ?? 0));
+					_logger?.LogInformation(string.Format("Successfully getting data from the API"));
 				}
 				else
 					_logger?.LogError("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
@@ -61,6 +61,14 @@ namespace SnookerBet.Core.Services
 			List<Event> events = GetData<Event>(string.Format(_snookerOrgSettings.EventUrl, idEvent));
 
 			return events?.FirstOrDefault();
+		}
+
+		public Player GetPlayer(int idPlayer)
+		{
+			_logger?.LogInformation(string.Format("External API: Getting player info [idPlayer={0}]", idPlayer));
+			List<Player> pl = GetData<Player>(string.Format(_snookerOrgSettings.PlayerUrl, idPlayer));
+
+			return pl?.FirstOrDefault();
 		}
 
 		public List<Event> GetEventsInSeason(int season = 0)

@@ -25,9 +25,9 @@ namespace UnitTests.Builders
 			_logger = new LoggerBuilder<SnookerService>().Build();
 			_externalDataService = new ExternalDataServiceBuilder().Build();
 			_eventRoundRepo = new EventRoundRepo(_dbContext);
-			_matchRepo = new MatchRepo(_dbContext);
-			_eventRepo = new EventRepo(_dbContext, _eventRoundRepo, _matchRepo);
 			_playerRepo = new PlayerRepo(_dbContext);
+			_matchRepo = new MatchRepo(_dbContext, _playerRepo);
+			_eventRepo = new EventRepo(_dbContext, _eventRoundRepo, _matchRepo);
 		}
 
 		public SnookerService Build()

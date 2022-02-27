@@ -13,10 +13,11 @@ namespace SnookerBet.Infrastructure.Repositories
 	public class MatchRepo : IMatchRepo
 	{
 		private readonly DapperContext db;
-
-		public MatchRepo(DapperContext dbContext)
+		private readonly IPlayerRepo _playerRepo;
+		public MatchRepo(DapperContext dbContext, IPlayerRepo playerRepo)
 		{
 			db = dbContext;
+			_playerRepo = playerRepo;
 		}
 
 		public Match Save(Match match)
@@ -40,6 +41,32 @@ namespace SnookerBet.Infrastructure.Repositories
 				trans.Complete();
 			}
 			return lstMatches;
+		}
+
+		public List<Match> FindByEvent(int idEvent)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM S_Match WHERE idEvent = @idEvent");
+
+			return db.Query<Match>(sql.ToString(), new { idEvent = idEvent });
+		}
+
+		public oMatch GenerateOMatch(Match match)
+		{
+			return new oMatch() {
+				IdMatch = match.IdMatch,
+				IdRound = match.IdRound,
+				IdEvent = match.IdEvent,
+				Number = match.Number,
+				Player1 = _playerRepo.GenerateOPlayer(match.Player1Id),
+				Score1 = match.Score1.Value,
+				Player2 = _playerRepo.GenerateOPlayer(match.Player2Id),
+				Score2 = match.Score2.Value,
+				Winner = _playerRepo.GenerateOPlayer(match.WinnerId.Value),
+				IdStatus = (short)(match.StartDate == null ? 0 : (match.EndDate == null ? 1 : 2)),
+				ScheduledDate = match.ScheduledDate,
+				note = match.note + " " + match.extendedNote
+			};
 		}
 	}
 }

@@ -51,8 +51,16 @@ namespace UnitTests
 		[Fact]
 		public void TestUpdateEventInfo()
 		{
-			int idEvent = 1128;
+			int idEvent = 1154;
 			_snookerService.UpdateEventInfo(idEvent);
+		}
+
+		[Fact]
+		public void TestGetEventInfoWithMatches()
+		{                                 
+			int idEvent = 1134;
+			oEvent evt = _snookerService.GetEventInfoWithMatches(idEvent);
+			_output.WriteLine(evt.ToString());
 		}
 	}
 }

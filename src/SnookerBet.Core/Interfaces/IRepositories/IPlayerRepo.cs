@@ -12,5 +12,7 @@ namespace SnookerBet.Core.Interfaces
 		Player FindById(int idPlayer);
 		Player Save(Player player);
 		List<Player> SaveList(List<Player> players);
+		oPlayer GenerateOPlayer(Player player);
+		oPlayer GenerateOPlayer(int idPlayer);
 	}
 }

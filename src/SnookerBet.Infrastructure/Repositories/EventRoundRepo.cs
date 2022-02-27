@@ -41,5 +41,25 @@ namespace SnookerBet.Infrastructure.Repositories
 			}
 			return lstEvtRounds;
 		}
+
+		public List<EventRound> FindByEvent(int idEvent)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM S_EventRound WHERE idEvent = @idEvent");
+
+			return db.Query<EventRound>(sql.ToString(), new { idEvent = idEvent });
+		}
+
+		public oEventRound GenerateOEventRound(EventRound evtRound)
+		{
+			return new oEventRound()
+			{
+				IdRound = evtRound.IdRound,
+				RoundName = evtRound.RoundName,
+				Distance = evtRound.Distance,
+				Money = evtRound.Money,
+				Currency = evtRound.Currency
+			};
+		}
 	}
 }

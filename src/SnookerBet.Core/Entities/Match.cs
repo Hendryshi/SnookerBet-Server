@@ -36,4 +36,22 @@ namespace SnookerBet.Core.Entities
 		[JsonIgnore]
 		public DateTime? DtUpdate { get; set; }
 	}
+
+	public class oMatch
+	{
+		public int IdMatch { get; set; }
+		public int IdRound { get; set; }
+		public int IdEvent { get; set; }
+		public int Number { get; set; }
+		public oPlayer Player1 { get; set; }
+		public int Score1 { get; set; }
+		public oPlayer Player2 { get; set; }
+		public int Score2 { get; set; }
+		public oPlayer Winner { get; set; }
+		public short IdStatus { get; set; }
+		public DateTime? ScheduledDate { get; set; }
+		public string note { get; set; }
+
+
+	}
 }

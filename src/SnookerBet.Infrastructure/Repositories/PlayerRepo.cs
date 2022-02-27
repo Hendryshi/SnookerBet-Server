@@ -47,5 +47,25 @@ namespace SnookerBet.Infrastructure.Repositories
 			return db.GetEntityById<Player>(idPlayer);
 		}
 
+		public oPlayer GenerateOPlayer(Player player)
+		{
+			return new oPlayer()
+			{
+				IdPlayer = player.IdPlayer,
+				Name = player.ChineseName ?? (player.LastName),
+				Photo = player.Photo,
+				Rank = player.SeasonRank
+			};
+		}
+
+		public oPlayer GenerateOPlayer(int idPlayer)
+		{
+			oPlayer output = null;
+			Player pl = FindById(idPlayer);
+			if(pl != null)
+				output = GenerateOPlayer(pl);
+
+			return output;
+		}
 	}
 }

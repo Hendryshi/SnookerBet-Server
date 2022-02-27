@@ -60,9 +60,15 @@ namespace SnookerBet.Infrastructure.Repositories
 			return lstEvents;
 		}
 
-		public Event FindById(int idEvent)
+		public Event FindById(int idEvent, bool onlyEvent = true)
 		{
-			return db.GetEntityById<Event>(idEvent);
+			Event evt = db.GetEntityById<Event>(idEvent);
+			if(!onlyEvent && evt != null)
+			{
+				evt.EventRounds = _eventRoundRepo.FindByEvent(idEvent);
+				evt.EventMatches = _matchRepo.FindByEvent(idEvent);
+			}
+			return evt;
 		}
 
 		public Event FindByIdExternal(int idExt)
@@ -73,5 +79,26 @@ namespace SnookerBet.Infrastructure.Repositories
 			return db.QuerySingleOrDefault<Event>(sql.ToString(), new { idExt = idExt});
 		}
 
+		public oEvent GenerateOEvent(Event evt, bool onlyEvent = true)
+		{
+			oEvent output = new oEvent()
+			{
+				IdEvent = evt.IdEvent,
+				Name = evt.Name,
+				StartDate = evt.StartDate,
+				EndDate = evt.EndDate
+			};
+
+			if(!onlyEvent)
+			{
+				foreach(EventRound eventRound in evt.EventRounds)
+				{
+					oEventRound oRound = _eventRoundRepo.GenerateOEventRound(eventRound);
+					evt.EventMatches.FindAll(r => r.IdRound == oRound.IdRound).ForEach(m => oRound.oMatches.Add(_matchRepo.GenerateOMatch(m)));
+					output.oEventRounds.Add(oRound);
+				}
+			}
+			return output;
+		}
 	}
 }
