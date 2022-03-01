@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
+using System.Threading;
 
 namespace SnookerBet.Web.Controllers
 {
@@ -22,6 +23,8 @@ namespace SnookerBet.Web.Controllers
 			_logger = logger;
 			_snookerService = snookerService;
 		}
+
+
 
 		[HttpGet]
 		[Route("GetEventWithMatch/{idEvent}")]
@@ -54,6 +57,56 @@ namespace SnookerBet.Web.Controllers
 				return HandleError("GetEventWithMatch", ex);
 			}
 		}
+
+		[HttpPost]
+		[Route("UpdateEventsInSeason/{season}")]
+		public IActionResult UpdateEventsInSeason(int season)
+		{
+			try
+			{
+				_logger.LogInformation($"Api UpdateEventsInSeason called: season[{season}]");
+				_snookerService.UpdateEventsInSeason(season);
+				return Ok($"All Events in season {season} have been updated in DB");
+			}
+			catch(Exception ex)
+			{
+				return HandleError("UpdateEventsInSeason", ex);
+			}
+		}
+
+		[HttpPost]
+		[Route("UpdatePlayersInSeason/{season}")]
+		public IActionResult UpdatePlayersInSeason(int season)
+		{
+			try
+			{
+				_logger.LogInformation($"Api UpdatePlayersInSeason called: season[{season}]");
+				_snookerService.UpdatePlayersInSeason(season);
+				return Ok($"All players in season {season} have been updated in DB");
+			}
+			catch(Exception ex)
+			{
+				return HandleError("UpdatePlayersInSeason", ex);
+			}
+		}
+
+		[HttpPost]
+		[Route("UpdateEvent/{idEvent}")]
+		public IActionResult UpdateEventInfo(int idEvent)
+		{
+			try
+			{
+				_logger.LogInformation($"Api UpdateEventInfo called: season[{idEvent}]");
+				_snookerService.UpdateEventInfo(idEvent);
+				return Ok($"Event[{idEvent}] and its matches have been updated in DB");
+			}
+			catch(Exception ex)
+			{
+				return HandleError("UpdateEventInfo", ex);
+			}
+		}
+
+		//TODO: Get Today Match
 
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public IActionResult HandleError(string apiName, Exception ex)

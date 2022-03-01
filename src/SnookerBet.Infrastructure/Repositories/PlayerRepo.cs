@@ -52,7 +52,7 @@ namespace SnookerBet.Infrastructure.Repositories
 			return new oPlayer()
 			{
 				IdPlayer = player.IdPlayer,
-				Name = player.ChineseName ?? (player.LastName),
+				Name = player.ChineseName ?? (player.LastName ?? player.FirstName),
 				Photo = player.Photo,
 				Rank = player.SeasonRank
 			};

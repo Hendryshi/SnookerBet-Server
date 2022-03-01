@@ -10,7 +10,7 @@ namespace SnookerBet.Core.Interfaces
 	public interface IMatchRepo
 	{
 		Match Save(Match match);
-		List<Match> SaveList(List<Match> matches);
+		List<Match> SaveList(List<Match> matches, int idEvent);
 		List<Match> FindByEvent(int idEvent);
 		oMatch GenerateOMatch(Match match);
 	}

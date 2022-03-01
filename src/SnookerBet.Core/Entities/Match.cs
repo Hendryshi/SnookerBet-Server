@@ -47,7 +47,7 @@ namespace SnookerBet.Core.Entities
 		public int Score1 { get; set; }
 		public oPlayer Player2 { get; set; }
 		public int Score2 { get; set; }
-		public oPlayer Winner { get; set; }
+		public int WinnerId { get; set; }
 		public short IdStatus { get; set; }
 		public DateTime? ScheduledDate { get; set; }
 		public string note { get; set; }

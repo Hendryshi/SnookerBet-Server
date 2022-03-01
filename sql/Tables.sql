@@ -80,10 +80,44 @@ CREATE TABLE S_Match
 )
 
 
+CREATE TABLE G_Quiz
+(	
+	idQuiz int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	idEvent INT NOT NULL,
+	dtStart DATETIME NULL,
+	dtEnd DATETIME NULL,
+	idStatus SMALLINT NOT NULL DEFAULT 0,
+	dtUpdate DATETIME NOT NULL,
+	CONSTRAINT FK_S_Event_IdEvent FOREIGN KEY (idEvent) REFERENCES S_Event(idEvent)
+)
 
+CREATE TABLE G_Gamer
+(	
+	idGamer int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	idQuiz INT NOT NULL,
+	wechatName DATETIME NULL,
+	quizName DATETIME NULL,
+	totalScore INT NOT NULL DEFAULT 0,
+	dtUpdate DATETIME NOT NULL,
+	CONSTRAINT FK_G_QUIZ_IDQUIZ FOREIGN KEY (idQuiz) REFERENCES G_Quiz(idQuiz)
+)
 
-
-
+CREATE TABLE G_GamerPredict
+(	
+	idGamer int NOT NULL,
+	idEvent int NOT NULL,
+	idRound int NOT NULL,
+	number int NOT NULL,
+	player1Id int NOT NULL,
+	score1 int NOT NULL,
+	player2Id int NOT NULL,
+	score2 int NOT NULL,
+	winnerId int NULL,
+	point int NOT NULL DEFAULT 0,
+	idStatus smallint NOT NULL DEFAULT 0,
+	dtUpdate DATETIME NOT NULL
+	CONSTRAINT FK_G_Gamer_idGamer FOREIGN KEY (idGamer) REFERENCES G_Gamer(idGamer)
+)
 
 
 update S_Player set chineseName = 'Èû¶û±È', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1597.png' where idPlayer = 17

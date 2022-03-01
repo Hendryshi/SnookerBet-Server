@@ -38,7 +38,7 @@ namespace SnookerBet.Infrastructure.Repositories
 						_eventRoundRepo.SaveList(evt.EventRounds);
 
 					if(evt.EventMatches.Count > 0)
-						_matchRepo.SaveList(evt.EventMatches);
+						_matchRepo.SaveList(evt.EventMatches, evt.IdEvent);
 				}
 
 				trans.Complete();
@@ -97,6 +97,7 @@ namespace SnookerBet.Infrastructure.Repositories
 					evt.EventMatches.FindAll(r => r.IdRound == oRound.IdRound).ForEach(m => oRound.oMatches.Add(_matchRepo.GenerateOMatch(m)));
 					output.oEventRounds.Add(oRound);
 				}
+				output.oEventRounds = output.oEventRounds.OrderByDescending(o => o.IdRound).ToList();
 			}
 			return output;
 		}
