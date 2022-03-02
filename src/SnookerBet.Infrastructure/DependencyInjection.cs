@@ -18,6 +18,7 @@ namespace SnookerBet.Infrastructure
 			services.AddTransient<IEventRoundRepo, Repositories.EventRoundRepo>();
 			services.AddTransient<IMatchRepo, Repositories.MatchRepo>();
 			services.AddTransient<IPlayerRepo, Repositories.PlayerRepo>();
+			services.AddTransient<IQuizRepo, Repositories.QuizRepo>();
 			return services;
 		}
 	}

@@ -43,11 +43,5 @@ namespace SnookerBet.Core.Entities
 		public int Sum { get; set; }
 	}
 
-	public class oPlayer
-	{
-		public int IdPlayer { get; set; }
-		public string Name { get; set; }
-		public int? Rank { get; set; }
-		public string Photo { get; set; }
-	}
+	
 }

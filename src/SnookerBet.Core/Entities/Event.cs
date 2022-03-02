@@ -40,13 +40,5 @@ namespace SnookerBet.Core.Entities
 		public List<Match> EventMatches { get; set; } = new List<Match>();
 	}
 
-	public class oEvent : BaseEntity
-	{
-		public int IdEvent { get; set; }
-		public string Name { get; set; }
-		public DateTime? StartDate { get; set; }
-		public DateTime? EndDate { get; set; }
-		public List<oEventRound> oEventRounds { get; set; } = new List<oEventRound>();
-
-	}
+	
 }

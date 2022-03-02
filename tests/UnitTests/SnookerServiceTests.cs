@@ -12,6 +12,7 @@ using Xunit.Abstractions;
 using System.Linq;
 using SnookerBet.Infrastructure.Repositories;
 using SnookerBet.Infrastructure.DbContext;
+using SnookerBet.Core.JsonObjects;
 
 namespace UnitTests
 {

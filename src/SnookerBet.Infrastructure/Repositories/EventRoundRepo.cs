@@ -7,6 +7,7 @@ using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
 using SnookerBet.Infrastructure.DbContext;
 using System.Transactions;
+using SnookerBet.Core.JsonObjects;
 
 namespace SnookerBet.Infrastructure.Repositories
 {
@@ -45,7 +46,7 @@ namespace SnookerBet.Infrastructure.Repositories
 		public List<EventRound> FindByEvent(int idEvent)
 		{
 			var sql = new StringBuilder();
-			sql.AppendLine(@"SELECT * FROM S_EventRound WHERE idEvent = @idEvent");
+			sql.AppendLine(@"SELECT * FROM S_EventRound WHERE idEvent = @idEvent ORDER BY idRound");
 
 			return db.Query<EventRound>(sql.ToString(), new { idEvent = idEvent });
 		}

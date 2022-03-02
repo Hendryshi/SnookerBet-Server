@@ -96,14 +96,15 @@ CREATE TABLE G_Gamer
 	idGamer int IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	idQuiz INT NOT NULL,
 	wechatName DATETIME NULL,
-	quizName DATETIME NULL,
+	gamerName DATETIME NULL,
 	totalScore INT NOT NULL DEFAULT 0,
 	dtUpdate DATETIME NOT NULL,
 	CONSTRAINT FK_G_QUIZ_IDQUIZ FOREIGN KEY (idQuiz) REFERENCES G_Quiz(idQuiz)
 )
 
-CREATE TABLE G_GamerPredict
+CREATE TABLE G_Predict
 (	
+	idPredict int IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	idGamer int NOT NULL,
 	idEvent int NOT NULL,
 	idRound int NOT NULL,
@@ -114,6 +115,9 @@ CREATE TABLE G_GamerPredict
 	score2 int NOT NULL,
 	winnerId int NULL,
 	point int NOT NULL DEFAULT 0,
+	winnerCorrect BIT NOT NULL DEFAULT 0,
+	scoreCorrect BIT NOT NULL DEFAULT 0,
+	dtResult DATETIME NULL,
 	idStatus smallint NOT NULL DEFAULT 0,
 	dtUpdate DATETIME NOT NULL
 	CONSTRAINT FK_G_Gamer_idGamer FOREIGN KEY (idGamer) REFERENCES G_Gamer(idGamer)

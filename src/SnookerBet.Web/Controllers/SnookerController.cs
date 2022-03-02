@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
 using System.Threading;
+using SnookerBet.Core.JsonObjects;
 
 namespace SnookerBet.Web.Controllers
 {

@@ -1,4 +1,5 @@
 ﻿using SnookerBet.Core.Entities;
+using SnookerBet.Core.JsonObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

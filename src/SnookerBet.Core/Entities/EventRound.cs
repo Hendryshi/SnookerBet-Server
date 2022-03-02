@@ -30,14 +30,5 @@ namespace SnookerBet.Core.Entities
 		public DateTime? DtUpdate { get; set; }
 	}
 
-	public class oEventRound
-	{
-		public int IdRound { get; set; }
-		public string RoundName { get; set; }
-		public int Distance { get; set; }
-		public int Money { get; set; }
-		public string Currency { get; set; }
-		public List<oMatch> oMatches { get; set; } = new List<oMatch>();
-
-	}
+	
 }

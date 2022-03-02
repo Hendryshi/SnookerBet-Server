@@ -7,6 +7,7 @@ using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
 using SnookerBet.Infrastructure.DbContext;
 using System.Transactions;
+using SnookerBet.Core.JsonObjects;
 
 namespace SnookerBet.Infrastructure.Repositories
 {

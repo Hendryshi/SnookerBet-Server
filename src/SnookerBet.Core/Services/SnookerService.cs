@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
+using SnookerBet.Core.JsonObjects;
 
 namespace SnookerBet.Core.Services
 {
@@ -75,26 +76,26 @@ namespace SnookerBet.Core.Services
 			_playerRepo.Save(pl);
 		}
 
-		public void UpdateEventInfo(int idEvent)
+		public Event UpdateEventInfo(int idEvent)
 		{
 			_logger?.LogInformation("Start update event and details info for event [id={0}] ", idEvent);
 			Event evt = _externalDataService.GetEvent(idEvent);
 			if(evt == null)
-				throw new Exception($"Cannot find event [id={idEvent}] from external api");
+				throw new ApplicationException($"Cannot find event [id={idEvent}] from external api");
 
 			List<EventRound> eventRounds = _externalDataService.GetRoundsInEvent(idEvent);
 			if(eventRounds == null || eventRounds.Count == 0)
-				throw new Exception($"Cannot find any round info for event [id={idEvent}] from external api");
+				throw new ApplicationException($"Cannot find any round info for event [id={idEvent}] from external api");
 
 			evt.EventRounds = eventRounds.FindAll(r => r.IdEvent == idEvent && r.Distance > 0);
 			
 			List<Match> matches = _externalDataService.GetMatchesInEvent(idEvent);
 			if(matches == null || matches.Count == 0)
-				throw new Exception($"Cannot find any match for event [id={idEvent}] from external api");
+				throw new ApplicationException($"Cannot find any match for event [id={idEvent}] from external api");
 
 			evt.EventMatches = matches.FindAll(m => m.IdEvent == idEvent);
 
-			_eventRepo.Save(evt, false);
+			return _eventRepo.Save(evt, false);
 		}
 
 		public oEvent GetEventInfoWithMatches(int idEvent)
