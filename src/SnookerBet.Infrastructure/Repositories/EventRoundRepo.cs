@@ -51,16 +51,5 @@ namespace SnookerBet.Infrastructure.Repositories
 			return db.Query<EventRound>(sql.ToString(), new { idEvent = idEvent });
 		}
 
-		public oEventRound GenerateOEventRound(EventRound evtRound)
-		{
-			return new oEventRound()
-			{
-				IdRound = evtRound.IdRound,
-				RoundName = evtRound.RoundName,
-				Distance = evtRound.Distance,
-				Money = evtRound.Money,
-				Currency = evtRound.Currency
-			};
-		}
 	}
 }

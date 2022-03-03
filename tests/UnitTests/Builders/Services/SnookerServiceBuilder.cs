@@ -13,8 +13,6 @@ namespace UnitTests.Builders
 	{
 		private EventRepo _eventRepo;
 		private PlayerRepo _playerRepo;
-		private EventRoundRepo _eventRoundRepo;
-		private MatchRepo _matchRepo;
 		private ExternalDataService _externalDataService;
 		private DapperContext _dbContext;
 		private readonly IAppLogger<SnookerService> _logger;
@@ -24,10 +22,8 @@ namespace UnitTests.Builders
 			_dbContext = new DapperContext(new ConfigBuilder().Build());
 			_logger = new LoggerBuilder<SnookerService>().Build();
 			_externalDataService = new ExternalDataServiceBuilder().Build();
-			_eventRoundRepo = new EventRoundRepo(_dbContext);
+			_eventRepo = new EventRepoBuilder().Build();
 			_playerRepo = new PlayerRepo(_dbContext);
-			_matchRepo = new MatchRepo(_dbContext, _playerRepo);
-			_eventRepo = new EventRepo(_dbContext, _eventRoundRepo, _matchRepo);
 		}
 
 		public SnookerService Build()

@@ -58,25 +58,11 @@ namespace SnookerBet.Infrastructure.Repositories
 			var sql = new StringBuilder();
 			sql.AppendLine(@"SELECT * FROM S_Match WHERE idEvent = @idEvent ORDER BY idEvent, idRound, number");
 
-			return db.Query<Match>(sql.ToString(), new { idEvent = idEvent });
+			List<Match> matches = db.Query<Match>(sql.ToString(), new { idEvent = idEvent });
+			matches.ForEach(m => m.Player1 = _playerRepo.FindById(m.Player1Id));
+			matches.ForEach(m => m.Player2 = _playerRepo.FindById(m.Player2Id));
+			return matches;
 		}
 
-		public oMatch GenerateOMatch(Match match)
-		{
-			return new oMatch() {
-				IdMatch = match.IdMatch,
-				IdRound = match.IdRound,
-				IdEvent = match.IdEvent,
-				Number = match.Number,
-				Player1 = _playerRepo.GenerateOPlayer(match.Player1Id),
-				Score1 = match.Score1.Value,
-				Player2 = _playerRepo.GenerateOPlayer(match.Player2Id),
-				Score2 = match.Score2.Value,
-				WinnerId = match.WinnerId.Value,
-				IdStatus = (short)(match.StartDate == null ? 0 : (match.EndDate == null ? 1 : 2)), //0: NotStart 1: Living 2: End
-				ScheduledDate = match.ScheduledDate,
-				note = match.note + " " + match.extendedNote
-			};
-		}
 	}
 }

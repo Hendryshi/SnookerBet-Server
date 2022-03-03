@@ -24,6 +24,10 @@ namespace SnookerBet.Core.Entities
 		public int Player2Id { get; set; }
 		public int? Score2 { get; set; }
 		public int? WinnerId { get; set; }
+		[Computed]
+		public Player Player1 { get; set; }
+		[Computed]
+		public Player Player2 { get; set; }
 		public bool Unfinished { get; set; } = true;
 		public bool OnBreak { get; set; } = false;
 		public DateTime? InitDate { get; set; }
@@ -37,3 +41,4 @@ namespace SnookerBet.Core.Entities
 		public DateTime? DtUpdate { get; set; }
 	}
 }
+

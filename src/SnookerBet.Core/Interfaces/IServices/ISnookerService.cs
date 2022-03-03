@@ -9,6 +9,7 @@ namespace SnookerBet.Core.Interfaces
 		Event UpdateEventInfo(int idEvent);
 		void UpdateEventsInSeason(int season);
 		void UpdatePlayerById(int idPlayer);
+		void UpdatePlayersInEvent(int idEvent);
 		void UpdatePlayersInSeason(int season);
 	}
 }

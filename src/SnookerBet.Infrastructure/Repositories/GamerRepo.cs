@@ -13,33 +13,38 @@ namespace SnookerBet.Infrastructure.Repositories
 	public class GamerRepo : IGamerRepo
 	{
 		private readonly DapperContext db;
+		private readonly IPredictRepo _predictRepo;
 
-		public GamerRepo(DapperContext dbContext)
+		public GamerRepo(DapperContext dbContext, IPredictRepo predictRepo)
 		{
 			db = dbContext;
+			_predictRepo = predictRepo;
 		}
 
-		public GamerRepo Save(Quiz quiz)
+		public Gamer Save(Gamer gamer)
 		{
-			quiz.DtUpdate = DateTime.Now;
+			gamer.DtUpdate = DateTime.Now;
 
-			if(quiz.IdQuiz == 0)
-				quiz.IdQuiz = (int)db.InsertEntity(quiz);
-			else if(!db.UpdateEntity(quiz))
-				throw new Exception($"Quiz not found in DB: {quiz.ToString()}");
+			if(gamer.IdGamer == 0)
+				gamer.IdGamer = (int)db.InsertEntity(gamer);
+			else if(!db.UpdateEntity(gamer))
+				throw new Exception($"Gamer not found in DB: {gamer.ToString()}");
 
-			return quiz;
+			return gamer;
 		}
 
 
-		public Quiz FindByEvent(int idEvent)
+		public Gamer FindByEvent(int idEvent, string wechatName, bool loadPredict = true)
 		{
 			var sql = new StringBuilder();
-			sql.AppendLine(@"SELECT * FROM G_Quiz WHERE idEvent = @idEvent");
+			sql.AppendLine(@"SELECT * FROM G_Gamer WHERE idEvent = @idEvent AND wechatName = @wechatName");
 
-			return db.QuerySingleOrDefault<Quiz>(sql.ToString(), new { idEvent = idEvent });
+			Gamer gamer = db.QuerySingleOrDefault<Gamer>(sql.ToString(), new { idEvent = idEvent, wechatName = wechatName });
+
+			if(gamer != null && loadPredict)
+				gamer.predicts = _predictRepo.LoadPredictsByEventAndGamer(idEvent, gamer.IdGamer);
+				
+			return gamer;
 		}
-
-		
 	}
 }

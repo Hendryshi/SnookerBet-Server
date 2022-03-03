@@ -17,14 +17,7 @@ namespace SnookerBet.Core.Entities
 		public int IdEvent { get; set; }
 		public DateTime? DtStart { get; set; }
 		public DateTime? DtEnd { get; set; }
-		public QuizStatus IdStatus { get; set; } = QuizStatus.Init;
+		public QuizStatus IdStatus { get; set; } = QuizStatus.OpenPredict;
 		public DateTime? DtUpdate { get; set; }
-	}
-
-	
-
-	public class oQuizRound
-	{
-
 	}
 }

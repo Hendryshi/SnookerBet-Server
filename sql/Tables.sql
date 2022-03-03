@@ -88,18 +88,18 @@ CREATE TABLE G_Quiz
 	dtEnd DATETIME NULL,
 	idStatus SMALLINT NOT NULL DEFAULT 0,
 	dtUpdate DATETIME NOT NULL,
-	CONSTRAINT FK_S_Event_IdEvent FOREIGN KEY (idEvent) REFERENCES S_Event(idEvent)
+	CONSTRAINT FK_G_Quiz_IdEvent FOREIGN KEY (idEvent) REFERENCES S_Event(idEvent)
 )
 
 CREATE TABLE G_Gamer
 (	
 	idGamer int IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	idQuiz INT NOT NULL,
-	wechatName DATETIME NULL,
-	gamerName DATETIME NULL,
+	idEvent INT NOT NULL,
+	wechatName NVARCHAR(100) NULL,
+	gamerName NVARCHAR(100) NULL,
 	totalScore INT NOT NULL DEFAULT 0,
 	dtUpdate DATETIME NOT NULL,
-	CONSTRAINT FK_G_QUIZ_IDQUIZ FOREIGN KEY (idQuiz) REFERENCES G_Quiz(idQuiz)
+	CONSTRAINT FK_G_Gamer_IdEvent FOREIGN KEY (idEvent) REFERENCES S_Event(idEvent)
 )
 
 CREATE TABLE G_Predict
@@ -120,7 +120,7 @@ CREATE TABLE G_Predict
 	dtResult DATETIME NULL,
 	idStatus smallint NOT NULL DEFAULT 0,
 	dtUpdate DATETIME NOT NULL
-	CONSTRAINT FK_G_Gamer_idGamer FOREIGN KEY (idGamer) REFERENCES G_Gamer(idGamer)
+	CONSTRAINT FK_G_Predict_idGamer FOREIGN KEY (idGamer) REFERENCES G_Gamer(idGamer)
 )
 
 

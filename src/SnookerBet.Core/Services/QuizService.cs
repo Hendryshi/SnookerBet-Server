@@ -8,6 +8,7 @@ using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
 using SnookerBet.Core.Enumerations;
 using SnookerBet.Core.JsonObjects;
+using SnookerBet.Core.Helper;
 
 namespace SnookerBet.Core.Services
 {
@@ -16,37 +17,21 @@ namespace SnookerBet.Core.Services
 		private readonly IEventRepo _eventRepo;
 		private readonly ISnookerService _snookerService;
 		private readonly IQuizRepo  _quizRepo;
-		private readonly IExternalDataService _externalDataService;
-		private readonly IAppLogger<SnookerService> _logger;
+		private readonly IGamerRepo _gamerRepo;
+		private readonly IAppLogger<QuizService> _logger;
 
-		public QuizService(IAppLogger<SnookerService> logger, IEventRepo eventRepo,
+		public QuizService(IAppLogger<QuizService> logger, IEventRepo eventRepo,
 			ISnookerService snookerService,
 			IQuizRepo quizRepo,
-			IExternalDataService externalDataService)
+			IGamerRepo gamerRepo)
 		{
 			_eventRepo = eventRepo;
 			_snookerService = snookerService;
 			_quizRepo = quizRepo;
-			_externalDataService = externalDataService;
+			_gamerRepo = gamerRepo;
 			_logger = logger;
 		}
 
-
-		public void UpdateEventsInSeason(int season)
-		{
-			_logger?.LogInformation("Start update all events info in season {0} ", season);
-			List<Event> events = _externalDataService.GetEventsInSeason(season)?.FindAll(e => e.TyEvent == "Ranking");
-
-			if(events != null && events.Count > 0)
-			{
-				_eventRepo.SaveList(events);
-				_logger?.LogInformation("{0} events in season {1} have been updated", events.Count, season);
-			}
-			else
-			{
-				_logger?.LogWarning("Cannot find any ranking events in season {0}", season);
-			}
-		}
 
 		public Quiz CreateQuiz(int idEvent)
 		{
@@ -54,6 +39,7 @@ namespace SnookerBet.Core.Services
 				throw new ApplicationException($"The quiz for Event[id={idEvent}] has already created");
 
 			Event evt = _snookerService.UpdateEventInfo(idEvent);
+			_snookerService.UpdatePlayersInEvent(idEvent);
 
 			int idRoundMin = evt.EventRounds.First().IdRound;
 
@@ -67,10 +53,13 @@ namespace SnookerBet.Core.Services
 		public oQuizPredict GetQuizPredict(int idEvent, string wechatId)
 		{
 			Quiz quiz = _quizRepo.FindByEvent(idEvent);
-			Event evt = _snookerService.UpdateEventInfo(idEvent);
-			
+			if(quiz == null)
+				throw new ApplicationException($"Cannot find quiz for Event[id={idEvent}] in DB");
 
-			return null;
+			Event evt = _eventRepo.FindById(idEvent, true);
+			Gamer gamer = _gamerRepo.FindByEvent(idEvent, wechatId);
+
+			return ConvertHelper.ConvertToQuizPredict(evt, gamer, quiz);
 		}
 		 
 	}

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
 using SnookerBet.Core.JsonObjects;
+using SnookerBet.Core.Helper;
 
 namespace SnookerBet.Core.Services
 {
@@ -67,6 +68,29 @@ namespace SnookerBet.Core.Services
 			}
 		}
 
+		public void UpdatePlayersInEvent(int idEvent)
+		{
+			_logger?.LogInformation("Start update all players info in event[id={idEvent}] ", idEvent);
+			List<Player> players = _externalDataService.GetPlayersInEvent(idEvent);
+
+			if(players != null && players.Count > 0)
+			{
+				List<Rank> ranks = _externalDataService.GetSeasonRankInSeason(0);
+
+				if(ranks != null && ranks.Count > 0)
+					players.ForEach(p => p.SeasonRank = ranks.Find(r => r.PlayerId == p.IdPlayer)?.Position);
+				else
+					throw new ApplicationException("Cannot find any ranking info in current season");
+
+				_playerRepo.SaveList(players);
+				_logger?.LogInformation("{0} players in current season have been updated", players.Count);
+			}
+			else
+			{
+				throw new ApplicationException($"Cannot find any players in event[id={idEvent}]");
+			}
+		}
+
 		public void UpdatePlayerById(int idPlayer)
 		{
 			Player pl = _externalDataService.GetPlayer(idPlayer);
@@ -100,11 +124,11 @@ namespace SnookerBet.Core.Services
 
 		public oEvent GetEventInfoWithMatches(int idEvent)
 		{
-			Event evt = _eventRepo.FindById(idEvent, false);
+			Event evt = _eventRepo.FindById(idEvent, true);
 			if(evt == null)
 				throw new ApplicationException($"Cannot find event [id={idEvent}] from db");
 
-			return _eventRepo.GenerateOEvent(evt, false);
+			return ConvertHelper.ConvertToOEvent(evt, true);
 		}
 	}
 }

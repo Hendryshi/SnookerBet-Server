@@ -82,7 +82,13 @@ namespace SnookerBet.Core.Services
 		{
 			if(season == 0) season = _snookerOrgSettings.Season;
 			_logger?.LogInformation(string.Format("External API: Getting players info in season [{0}]", season));
-			return GetData<Player>(string.Format(_snookerOrgSettings.PlayersInsSeasonUrl, season));
+			return GetData<Player>(string.Format(_snookerOrgSettings.PlayersInSeasonUrl, season));
+		}
+
+		public List<Player> GetPlayersInEvent(int idEvent = 0)
+		{
+			_logger?.LogInformation(string.Format("External API: Getting players info in event[id={0}]", idEvent));
+			return GetData<Player>(string.Format(_snookerOrgSettings.PlayersInEventUrl, idEvent));
 		}
 
 		public List<Rank> GetSeasonRankInSeason(int season = 0)

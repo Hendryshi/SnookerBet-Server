@@ -1,4 +1,5 @@
-﻿using SnookerBet.Core.Enumerations;
+﻿using SnookerBet.Core.Entities;
+using SnookerBet.Core.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace SnookerBet.Core.JsonObjects
 {
-	public class oQuizPredict
+	public class oQuizPredict : BaseEntity
 	{
 		public int IdEvent { get; set; }
 		public string EventName { get; set; }
-		public QuizStatus IdStatus { get; set; }
-		public int IdGamer { get; set; }
+		public bool ReadOnly { get; set; } = false;
+		public oGamer oGamer { get; set; } = new oGamer();
 		public List<oQuizRound> oQuizRounds { get; set; } = new List<oQuizRound>();
 	}
 }

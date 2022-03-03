@@ -20,6 +20,7 @@ namespace UnitTests
 	{
 		private readonly ITestOutputHelper _output;
 		private readonly SnookerService _snookerService;
+		private readonly GamerRepo _gamerRepo;
 
 		public SnookerServiceTests(ITestOutputHelper output)
 		{
@@ -57,11 +58,20 @@ namespace UnitTests
 		}
 
 		[Fact]
-		public void TestGetEventInfoWithMatches()
+		public void TestGetOEventInfoWithMatches()
 		{                                 
 			int idEvent = 1134;
 			oEvent evt = _snookerService.GetEventInfoWithMatches(idEvent);
 			_output.WriteLine(evt.ToString());
+		}
+
+		[Fact]
+		public void TestGetEventWithMatch()
+		{
+			EventRepo eventRepo = new EventRepoBuilder().Build();
+			int idEvent = 1134;
+			
+			eventRepo.FindById(idEvent, false);
 		}
 	}
 }

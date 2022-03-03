@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SnookerBet.Core.Entities;
+using SnookerBet.Core.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SnookerBet.Core.JsonObjects
 {
-	public class oEvent
+	public class oEvent : BaseEntity
 	{
 		public int IdEvent { get; set; }
 		public string Name { get; set; }
@@ -15,7 +17,7 @@ namespace SnookerBet.Core.JsonObjects
 		public List<oEventRound> oEventRounds { get; set; } = new List<oEventRound>();
 	}
 
-	public class oPlayer
+	public class oPlayer : BaseEntity
 	{
 		public int IdPlayer { get; set; }
 		public string Name { get; set; }
@@ -23,19 +25,37 @@ namespace SnookerBet.Core.JsonObjects
 		public string Photo { get; set; }
 	}
 
-	public class oMatch
+	public class oMatch : BaseEntity
 	{
-		public int IdMatch { get; set; }
-		public int IdRound { get; set; }
 		public int IdEvent { get; set; }
+		public int IdRound { get; set; }
 		public int Number { get; set; }
 		public oPlayer Player1 { get; set; }
 		public int Score1 { get; set; }
 		public oPlayer Player2 { get; set; }
 		public int Score2 { get; set; }
 		public int WinnerId { get; set; }
-		public short IdStatus { get; set; }
+		public MatchStatus StMatch { get; set; }
 		public DateTime? ScheduledDate { get; set; }
 		public string note { get; set; }
+
+		public oMatch(oMatch m)
+		{
+			this.IdEvent = m.IdEvent;
+			this.IdRound = m.IdRound;
+			this.Number = m.Number;
+			Player1 = m.Player1;
+			Score1 = m.Score1;
+			Player2 = m.Player2;
+			Score2 = m.Score2;
+			WinnerId = m.WinnerId;
+			StMatch = m.StMatch;
+			ScheduledDate = m.ScheduledDate;
+			note = m.note;
+		}
+
+		public oMatch()
+		{
+		}
 	}
 }

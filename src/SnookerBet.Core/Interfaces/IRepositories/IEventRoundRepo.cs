@@ -13,6 +13,5 @@ namespace SnookerBet.Core.Interfaces
 		EventRound Save(EventRound evtRound);
 		List<EventRound> SaveList(List<EventRound> evtRounds);
 		List<EventRound> FindByEvent(int idEvent);
-		oEventRound GenerateOEventRound(EventRound evtRound);
 	}
 }

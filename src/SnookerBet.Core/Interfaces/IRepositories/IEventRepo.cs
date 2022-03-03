@@ -10,9 +10,8 @@ namespace SnookerBet.Core.Interfaces
 {
 	public interface IEventRepo
 	{
-		Event FindById(int idEvent, bool onlyEvent = true);
+		Event FindById(int idEvent, bool loadMatch = false);
 		Event Save(Event evt, bool onlyEvent = true);
 		List<Event> SaveList(List<Event> events);
-		oEvent GenerateOEvent(Event evt, bool onlyEvent = true);
 	}
 }

@@ -16,7 +16,8 @@ namespace SnookerBet.Core.Settings
 		public string MatchsInEvtUrl { get; set; }
 		public string OngoingMatchUrl { get; set; }
 		public string PlayerUrl { get; set; }
-		public string PlayersInsSeasonUrl { get; set; }
+		public string PlayersInSeasonUrl { get; set; }
+		public string PlayersInEventUrl { get; set; }
 		public string RankingUrl { get; set; }
 		public string RoundInfoUrl { get; set; }
 	}

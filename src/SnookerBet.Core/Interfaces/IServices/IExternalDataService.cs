@@ -12,5 +12,6 @@ namespace SnookerBet.Core.Interfaces
 		List<EventRound> GetRoundsInEvent(int idEvent);
 		List<Rank> GetSeasonRankInSeason(int season = 0);
 		Player GetPlayer(int idPlayer);
+		List<Player> GetPlayersInEvent(int idEvent);
 	}
 }
