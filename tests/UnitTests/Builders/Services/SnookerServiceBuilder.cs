@@ -12,23 +12,23 @@ namespace UnitTests.Builders
 	public class SnookerServiceBuilder
 	{
 		private EventRepo _eventRepo;
+		private MatchRepo _matchRepo;
 		private PlayerRepo _playerRepo;
 		private ExternalDataService _externalDataService;
-		private DapperContext _dbContext;
 		private readonly IAppLogger<SnookerService> _logger;
 		
 		public SnookerServiceBuilder()
 		{
-			_dbContext = new DapperContext(new ConfigBuilder().Build());
 			_logger = new LoggerBuilder<SnookerService>().Build();
 			_externalDataService = new ExternalDataServiceBuilder().Build();
 			_eventRepo = new EventRepoBuilder().Build();
-			_playerRepo = new PlayerRepo(_dbContext);
+			_matchRepo = new MatchRepoBuilder().Build();
+			_playerRepo = new PlayerRepoBuilder().Build();
 		}
 
 		public SnookerService Build()
 		{
-			return new SnookerService(_logger, _eventRepo, _playerRepo, _externalDataService);
+			return new SnookerService(_logger, _eventRepo, _matchRepo, _playerRepo, _externalDataService);
 		}
 	}
 }

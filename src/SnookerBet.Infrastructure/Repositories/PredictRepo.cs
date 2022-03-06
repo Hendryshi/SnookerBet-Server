@@ -33,6 +33,18 @@ namespace SnookerBet.Infrastructure.Repositories
 			return predict;
 		}
 
+		public List<Predict> SaveList(List<Predict> predicts)
+		{
+			List<Predict> lstPredict = new List<Predict>();
+			using(var trans = new TransactionScope())
+			{
+				foreach(Predict p in predicts)
+					lstPredict.Add(Save(p));
+
+				trans.Complete();
+			}
+			return lstPredict;
+		}
 
 		public List<Predict> LoadPredictsByEventAndGamer(int idEvent, int idGamer)
 		{
@@ -47,6 +59,33 @@ namespace SnookerBet.Infrastructure.Repositories
 			return predicts;
 		}
 
-		
+		public Predict FindByMatchAndGamer(int idGamer, int idEvent, int idRound, int idNumber)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM G_Predict WHERE idGamer = @idGamer AND idEvent = @idEvent AND idRound = @idRound AND number = @number");
+
+			Predict predict = db.QuerySingleOrDefault<Predict>(sql.ToString(), new { idGamer = idGamer, idEvent = idEvent, idRound = idRound, number = idNumber });
+
+			if(predict != null)
+			{
+				predict.Player1 = _playerRepo.FindById(predict.Player1Id);
+				predict.Player2 = _playerRepo.FindById(predict.Player2Id);
+			}
+			
+			return predict;
+		}
+
+		public List<Predict> FindByMatch(int idEvent, int idRound, int idNumber)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM G_Predict WHERE idEvent = @idEvent AND idRound = @idRound AND number = @number");
+
+			List<Predict> predicts = db.Query<Predict>(sql.ToString(), new { idEvent = idEvent, idRound = idRound, number = idNumber });
+
+			predicts.ForEach(p => p.Player1 = _playerRepo.FindById(p.Player1Id));
+			predicts.ForEach(p => p.Player2 = _playerRepo.FindById(p.Player2Id));
+
+			return predicts;
+		}
 	}
 }

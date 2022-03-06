@@ -64,5 +64,19 @@ namespace SnookerBet.Infrastructure.Repositories
 			return matches;
 		}
 
+		public Match FindById(int idEvent, int idRound, int idNumber)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM S_Match WHERE idEvent = @idEvent AND idRound = @idRound AND number = @number");
+
+			Match match = db.QuerySingleOrDefault<Match>(sql.ToString(), new { idEvent = idEvent, idRound = idRound, number = idNumber });
+			if(match != null)
+			{
+				match.Player1 = _playerRepo.FindById(match.Player1Id);
+				match.Player2 = _playerRepo.FindById(match.Player2Id);
+			}
+			return match;
+		}
+
 	}
 }

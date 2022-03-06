@@ -15,6 +15,7 @@ namespace UnitTests.Builders
 		private EventRepo _eventRepo;
 		private readonly IQuizRepo _quizRepo;
 		private readonly IGamerRepo _gamerRepo;
+		private readonly IPredictRepo _predictRepo;
 		private readonly IAppLogger<QuizService> _logger;
 		
 		public QuizServiceBuilder()
@@ -24,11 +25,12 @@ namespace UnitTests.Builders
 			_eventRepo = new EventRepoBuilder().Build();
 			_quizRepo = new QuizRepoBuilder().Build();
 			_gamerRepo = new GamerRepoBuilder().Build();
+			_predictRepo = new PredictRepoBuilder().Build();
 		}
 
 		public QuizService Build()
 		{
-			return new QuizService(_logger, _eventRepo, _snookerService, _quizRepo, _gamerRepo);
+			return new QuizService(_logger, _snookerService, _quizRepo, _gamerRepo, _predictRepo);
 		}
 	}
 }

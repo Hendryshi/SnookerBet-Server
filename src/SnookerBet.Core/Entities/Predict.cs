@@ -27,7 +27,7 @@ namespace SnookerBet.Core.Entities
 		[Computed]
 		public Player Player2 { get; set; }
 		public int? WinnerId { get; set; }
-		public int point { get; set; }
+		public int? Point { get; set; }
 		public bool WinnerCorrect { get; set; } = false;
 		public bool ScoreCorrect { get; set; } = false;
 		public DateTime? DtResult { get; set; }

@@ -14,7 +14,8 @@ namespace SnookerBet.Core.JsonObjects
 		public string GamerName { get; set; }
 		public bool IsWinnerCorrect { get; set; } = false;
 		public bool IsScoreCorrect { get; set; } = false;
-		public PredictStatus predictStatus { get; set; } = PredictStatus.Init;
+		public int? Point { get; set; }
+		public PredictStatus PredictStatus { get; set; } = PredictStatus.Init;
 
 		public oPredict(oMatch m) : base(m) { }
 

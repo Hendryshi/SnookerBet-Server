@@ -20,7 +20,6 @@ namespace UnitTests
 	{
 		private readonly ITestOutputHelper _output;
 		private readonly SnookerService _snookerService;
-		private readonly GamerRepo _gamerRepo;
 
 		public SnookerServiceTests(ITestOutputHelper output)
 		{
@@ -73,5 +72,7 @@ namespace UnitTests
 			
 			eventRepo.FindById(idEvent, false);
 		}
+
+		
 	}
 }

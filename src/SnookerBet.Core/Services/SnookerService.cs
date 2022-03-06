@@ -14,15 +14,18 @@ namespace SnookerBet.Core.Services
 	public class SnookerService : ISnookerService
 	{
 		private readonly IEventRepo _eventRepo;
+		private readonly IMatchRepo _matchRepo;
 		private readonly IPlayerRepo _playerRepo;
 		private readonly IExternalDataService _externalDataService;
 		private readonly IAppLogger<SnookerService> _logger;
 
 		public SnookerService(IAppLogger<SnookerService> logger, IEventRepo eventRepo,
+			IMatchRepo matchRepo,
 			IPlayerRepo playerRepo,
 			IExternalDataService externalDataService)
 		{
 			_eventRepo = eventRepo;
+			_matchRepo = matchRepo;
 			_playerRepo = playerRepo;
 			_externalDataService = externalDataService;
 			_logger = logger;
@@ -129,6 +132,16 @@ namespace SnookerBet.Core.Services
 				throw new ApplicationException($"Cannot find event [id={idEvent}] from db");
 
 			return ConvertHelper.ConvertToOEvent(evt, true);
+		}
+
+		public Match GetMatchInfo(int idEvent, int idRound, int idNumber)
+		{
+			return _matchRepo.FindById(idEvent, idRound, idNumber);
+		}
+
+		public Event GetEventById(int idEvent, bool loadMatch = false)
+		{
+			return _eventRepo.FindById(idEvent, loadMatch);
 		}
 	}
 }

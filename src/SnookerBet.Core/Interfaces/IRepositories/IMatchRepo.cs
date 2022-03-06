@@ -13,5 +13,6 @@ namespace SnookerBet.Core.Interfaces
 		Match Save(Match match);
 		List<Match> SaveList(List<Match> matches, int idEvent);
 		List<Match> FindByEvent(int idEvent);
+		Match FindById(int idEvent, int idRound, int idNumber);
 	}
 }

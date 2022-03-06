@@ -10,9 +10,11 @@ namespace SnookerBet.Core.Enumerations
 	public enum QuizStatus : short
 	{
 		OpenPredict = 0,
-		MatchInProgress,
+		InProgress,
 		ReOpenPredict,
-		Done
+		InSecondProgress,
+		Done,
+		Archived
 	}
 
 	public enum PredictStatus: short

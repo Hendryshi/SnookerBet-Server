@@ -15,10 +15,12 @@ namespace SnookerBet.Core.Entities
 		[Key]
 		public int IdGamer { get; set; }
 		public int IdEvent { get; set; }
-		public string wechatName { get; set; }
-		public string gamerName { get; set; }
-		public int totalScore { get; set; }
+		public string WechatName { get; set; }
+		public string GamerName { get; set; }
+		public int TotalScore { get; set; }
+		public bool ChangePredict { get; set; } = false;
 		public DateTime? DtUpdate { get; set; }
+		[Computed]
 		public List<Predict> predicts { get; set; } = new List<Predict>();
 	}
 

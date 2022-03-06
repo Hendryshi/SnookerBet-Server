@@ -21,20 +21,35 @@ namespace SnookerBet.Infrastructure.Repositories
 			_predictRepo = predictRepo;
 		}
 
-		public Gamer Save(Gamer gamer)
+		public Gamer Save(Gamer gamer, bool updatePredict = false)
 		{
 			gamer.DtUpdate = DateTime.Now;
+			using(var trans = new TransactionScope())
+			{
 
-			if(gamer.IdGamer == 0)
-				gamer.IdGamer = (int)db.InsertEntity(gamer);
-			else if(!db.UpdateEntity(gamer))
-				throw new Exception($"Gamer not found in DB: {gamer.ToString()}");
+				if(gamer.IdGamer == 0)
+					gamer.IdGamer = (int)db.InsertEntity(gamer);
+				else if(!db.UpdateEntity(gamer))
+					throw new Exception($"Gamer not found in DB: {gamer.ToString()}");
+
+				if(updatePredict)
+				{
+					gamer.predicts.ForEach(p => p.IdGamer = gamer.IdGamer);
+					_predictRepo.SaveList(gamer.predicts);
+				}
+
+				trans.Complete();
+			}
 
 			return gamer;
 		}
 
+		public Gamer FindById(int idGamer)
+		{
+			return db.GetEntityById<Gamer>(idGamer);
+		}
 
-		public Gamer FindByEvent(int idEvent, string wechatName, bool loadPredict = true)
+		public Gamer FindByEventAndName(int idEvent, string wechatName, bool loadPredict = true)
 		{
 			var sql = new StringBuilder();
 			sql.AppendLine(@"SELECT * FROM G_Gamer WHERE idEvent = @idEvent AND wechatName = @wechatName");
@@ -45,6 +60,19 @@ namespace SnookerBet.Infrastructure.Repositories
 				gamer.predicts = _predictRepo.LoadPredictsByEventAndGamer(idEvent, gamer.IdGamer);
 				
 			return gamer;
+		}
+
+		public List<Gamer> LoadAllByEvent(int idEvent, bool loadPredict = true)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM G_Gamer WHERE idEvent = @idEvent");
+
+			List<Gamer> gamers = db.Query<Gamer>(sql.ToString(), new { idEvent = idEvent});
+
+			if(loadPredict)
+				gamers.ForEach(g => g.predicts = _predictRepo.LoadPredictsByEventAndGamer(idEvent, g.IdGamer));
+
+			return gamers;
 		}
 	}
 }

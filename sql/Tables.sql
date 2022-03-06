@@ -98,6 +98,7 @@ CREATE TABLE G_Gamer
 	wechatName NVARCHAR(100) NULL,
 	gamerName NVARCHAR(100) NULL,
 	totalScore INT NOT NULL DEFAULT 0,
+	changePredict BIT NOT NULL DEFAULT 0,
 	dtUpdate DATETIME NOT NULL,
 	CONSTRAINT FK_G_Gamer_IdEvent FOREIGN KEY (idEvent) REFERENCES S_Event(idEvent)
 )
@@ -114,7 +115,7 @@ CREATE TABLE G_Predict
 	player2Id int NOT NULL,
 	score2 int NOT NULL,
 	winnerId int NULL,
-	point int NOT NULL DEFAULT 0,
+	point int NULL,
 	winnerCorrect BIT NOT NULL DEFAULT 0,
 	scoreCorrect BIT NOT NULL DEFAULT 0,
 	dtResult DATETIME NULL,
@@ -122,6 +123,17 @@ CREATE TABLE G_Predict
 	dtUpdate DATETIME NOT NULL
 	CONSTRAINT FK_G_Predict_idGamer FOREIGN KEY (idGamer) REFERENCES G_Gamer(idGamer)
 )
+
+GO
+CREATE VIEW vPredictSummary
+AS
+SELECT p.idGamer, g.gamerName, p.idEvent, COUNT(*) totalPredict, SUM(CAST(winnerCorrect AS INT)) nbrWinnerCorrect,
+SUM(CAST(scoreCorrect AS INT)) nbrScoreCorrect, SUM(point) totalPoint
+FROM G_Predict p
+JOIN G_Gamer g ON p.idGamer = g.idGamer
+WHERE p.point IS NOT NULL AND p.idStatus = 1
+GROUP BY p.idGamer, g.gamerName, p.idEvent
+GO
 
 
 update S_Player set chineseName = 'Èû¶û±È', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1597.png' where idPlayer = 17
