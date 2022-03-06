@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SnookerBet.Core.JsonObjects
@@ -18,5 +19,8 @@ namespace SnookerBet.Core.JsonObjects
 		public DateTime? StartDate { get; set; }
 		public DateTime? EndDate { get; set; }
 		public QuizStatus StQuiz { get; set; }
+
+		[JsonConstructor]
+		public oQuiz() { }
 	}
 }

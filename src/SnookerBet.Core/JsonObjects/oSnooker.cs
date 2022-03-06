@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SnookerBet.Core.JsonObjects
@@ -15,6 +16,10 @@ namespace SnookerBet.Core.JsonObjects
 		public DateTime? StartDate { get; set; }
 		public DateTime? EndDate { get; set; }
 		public List<oEventRound> oEventRounds { get; set; } = new List<oEventRound>();
+
+		[JsonConstructor]
+		public oEvent() { }
+
 	}
 
 	public class oPlayer : BaseEntity
@@ -23,6 +28,9 @@ namespace SnookerBet.Core.JsonObjects
 		public string Name { get; set; }
 		public int? Rank { get; set; }
 		public string Photo { get; set; }
+
+		[JsonConstructor]
+		public oPlayer() { }
 	}
 
 	public class oMatch : BaseEntity
@@ -54,8 +62,7 @@ namespace SnookerBet.Core.JsonObjects
 			note = m.note;
 		}
 
-		public oMatch()
-		{
-		}
+		[JsonConstructor]
+		public oMatch() { }
 	}
 }

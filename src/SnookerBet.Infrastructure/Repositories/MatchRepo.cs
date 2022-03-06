@@ -78,5 +78,20 @@ namespace SnookerBet.Infrastructure.Repositories
 			return match;
 		}
 
+		public List<Match> GetOnGoingMatches()
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine("SELECT * FROM S_Match");
+			sql.AppendLine("WHERE idEvent IN (SELECT idEvent FROM G_Quiz WHERE dtEnd IS NULL AND idStatus <> -1)");
+			sql.AppendLine("AND endDate IS NULL OR DATEDIFF(HOUR, endDate, GETDATE()) < 12");
+			sql.AppendLine("ORDER BY startDate DESC, endDate ASC ");
+
+			List<Match> matches = db.Query<Match>(sql.ToString());
+			matches.ForEach(m => m.Player1 = _playerRepo.FindById(m.Player1Id));
+			matches.ForEach(m => m.Player2 = _playerRepo.FindById(m.Player2Id));
+
+			return matches;
+		}
+
 	}
 }

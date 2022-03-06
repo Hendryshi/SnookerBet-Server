@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SnookerBet.Core.JsonObjects
@@ -15,5 +16,8 @@ namespace SnookerBet.Core.JsonObjects
 		public bool ReadOnly { get; set; } = false;
 		public oGamer oGamer { get; set; } = new oGamer();
 		public List<oQuizRound> oQuizRounds { get; set; } = new List<oQuizRound>();
+
+		[JsonConstructor]
+		public oQuizPredict() { }
 	}
 }

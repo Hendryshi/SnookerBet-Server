@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SnookerBet.Core.JsonObjects
@@ -11,5 +12,8 @@ namespace SnookerBet.Core.JsonObjects
 	{
 		public oMatch OMatch { get; set; }
 		public List<oPredict> oPredicts { get; set; } = new List<oPredict>();
+
+		[JsonConstructor]
+		public oQuizMatch() { }
 	}
 }

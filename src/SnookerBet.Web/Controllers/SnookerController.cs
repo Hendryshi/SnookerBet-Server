@@ -42,6 +42,22 @@ namespace SnookerBet.Web.Controllers
 				return HandleError("GetEventWithMatch", ex);
 			}
 		}
+		
+		[HttpGet]
+		[Route("GetOnGoingMatch")]
+		public IActionResult GetOnGoingMatch()
+		{
+			try
+			{
+				_logger.LogInformation($"Api GetOnGoingMatch called");
+				List<oMatch> oMatches = _snookerService.GetOnGoingMatch();
+				return Ok(oMatches);
+			}
+			catch(Exception ex)
+			{
+				return HandleError("GetOnGoingMatch", ex);
+			}
+		}
 
 		[HttpPost]
 		[Route("UpdatePlayer/{idPlayer}")]

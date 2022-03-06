@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SnookerBet.Core.JsonObjects
@@ -25,9 +26,7 @@ namespace SnookerBet.Core.JsonObjects
 			this.Currency = r.Currency;
 		}
 
-		public oRound()
-		{
-		}
+		public oRound() { }
 	}
 
 	public class oQuizRound : oRound
@@ -35,6 +34,9 @@ namespace SnookerBet.Core.JsonObjects
 		public List<oPredict> oPredicts { get; set; } = new List<oPredict>();
 
 		public oQuizRound(oRound r) : base(r) { }
+		
+		[JsonConstructor]
+		public oQuizRound() { }
 	}
 
 	public class oEventRound : oRound
@@ -42,5 +44,8 @@ namespace SnookerBet.Core.JsonObjects
 		public List<oMatch> oMatches { get; set; } = new List<oMatch>();
 
 		public oEventRound(oRound r) : base(r) { }
+
+		[JsonConstructor]
+		public oEventRound() { }
 	}
 }

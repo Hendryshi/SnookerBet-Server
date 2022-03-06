@@ -41,6 +41,7 @@ namespace SnookerBet.Web.Controllers
 			}
 		}
 
+
 		[HttpGet]
 		[Route("GetQuizPredict")]
 		public IActionResult GetQuizPredict(int e, string wn)

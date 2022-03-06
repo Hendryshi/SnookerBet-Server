@@ -31,6 +31,34 @@ namespace SnookerBet.Core.Services
 			_logger = logger;
 		}
 
+		public Event GetEventById(int idEvent, bool loadMatch = false)
+		{
+			return _eventRepo.FindById(idEvent, loadMatch);
+		}
+
+		public Match GetMatchInfo(int idEvent, int idRound, int idNumber)
+		{
+			return _matchRepo.FindById(idEvent, idRound, idNumber);
+		}
+
+		public oEvent GetEventInfoWithMatches(int idEvent)
+		{
+			Event evt = _eventRepo.FindById(idEvent, true);
+			if(evt == null)
+				throw new ApplicationException($"Cannot find event [id={idEvent}] from db");
+
+			return ConvertHelper.ConvertToOEvent(evt, true);
+		}
+
+		public List<oMatch> GetOnGoingMatch()
+		{
+			List<oMatch> oMatches = new List<oMatch>();
+			List<Match> matches = _matchRepo.GetOnGoingMatches();
+
+			matches.ForEach(m => oMatches.Add(ConvertHelper.ConvertToOMatch(m)));
+
+			return oMatches;
+		}
 
 		public void UpdateEventsInSeason(int season)
 		{
@@ -125,23 +153,5 @@ namespace SnookerBet.Core.Services
 			return _eventRepo.Save(evt, false);
 		}
 
-		public oEvent GetEventInfoWithMatches(int idEvent)
-		{
-			Event evt = _eventRepo.FindById(idEvent, true);
-			if(evt == null)
-				throw new ApplicationException($"Cannot find event [id={idEvent}] from db");
-
-			return ConvertHelper.ConvertToOEvent(evt, true);
-		}
-
-		public Match GetMatchInfo(int idEvent, int idRound, int idNumber)
-		{
-			return _matchRepo.FindById(idEvent, idRound, idNumber);
-		}
-
-		public Event GetEventById(int idEvent, bool loadMatch = false)
-		{
-			return _eventRepo.FindById(idEvent, loadMatch);
-		}
 	}
 }

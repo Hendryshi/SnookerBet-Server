@@ -9,12 +9,12 @@ namespace SnookerBet.Core.Enumerations
 	//TODO: Add constraint&Def to every table in DB
 	public enum QuizStatus : short
 	{
-		OpenPredict = 0,
+		Archived = -1,
+		OpenPredict,
 		InProgress,
 		ReOpenPredict,
 		InSecondProgress,
 		Done,
-		Archived
 	}
 
 	public enum PredictStatus: short
