@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "tests\UnitTest
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{7ED0DF49-E11A-4895-9B00-523E472BFB6B}"
 	ProjectSection(SolutionItems) = preProject
+		sql\StoredProcedure.sql = sql\StoredProcedure.sql
 		sql\Tables.sql = sql\Tables.sql
+		sql\Views.sql = sql\Views.sql
 	EndProjectSection
 EndProject
 Global

@@ -1,0 +1,7 @@
+GO
+CREATE VIEW vMatchOnGoing
+AS
+SELECT * FROM S_Match
+WHERE idEvent IN (SELECT idEvent FROM G_Quiz WHERE dtEnd IS NULL AND idStatus <> -1)
+AND startDate IS NOT NULL AND (endDate IS NULL OR DATEDIFF(HOUR, endDate, GETDATE()) BETWEEN 0 AND 12)
+GO

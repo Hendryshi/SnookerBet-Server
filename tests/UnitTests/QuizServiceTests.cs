@@ -126,5 +126,19 @@ namespace UnitTests
 			List<oPredictGamerTrend> oPredictGamerTrends = _quizService.GetPredictTrending(idEvent);
 			oPredictGamerTrends.ForEach(p => _output.WriteLine(p.ToString()));
 		}
+
+		[Fact]
+		public void TestMath()
+		{
+			decimal a = Math.Round((decimal)100/6, 2);
+			decimal b = a * 3;
+			_output.WriteLine(b.ToString());
+		}
+
+		[Fact]
+		public void TestCalculatePoint()
+		{
+			_quizService.CalculateGamerScore();
+		}
 	}
 }

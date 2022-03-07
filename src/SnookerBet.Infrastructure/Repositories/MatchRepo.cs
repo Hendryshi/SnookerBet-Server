@@ -81,9 +81,7 @@ namespace SnookerBet.Infrastructure.Repositories
 		public List<Match> GetOnGoingMatches()
 		{
 			var sql = new StringBuilder();
-			sql.AppendLine("SELECT * FROM S_Match");
-			sql.AppendLine("WHERE idEvent IN (SELECT idEvent FROM G_Quiz WHERE dtEnd IS NULL AND idStatus <> -1)");
-			sql.AppendLine("AND endDate IS NULL OR DATEDIFF(HOUR, endDate, GETDATE()) < 12");
+			sql.AppendLine("SELECT * FROM vMatchOnGoing");
 			sql.AppendLine("ORDER BY startDate DESC, endDate ASC ");
 
 			List<Match> matches = db.Query<Match>(sql.ToString());
@@ -93,5 +91,15 @@ namespace SnookerBet.Infrastructure.Repositories
 			return matches;
 		}
 
+		public List<Match> GetEndedMatchInDay(DateTime dtStamp)
+		{
+			var sql = new StringBuilder();
+			sql.AppendFormat("EXECUTE GetEndedMatchInDay @dtStamp = '{0}'", dtStamp);
+
+			List<Match> matches = db.Query<Match>(sql.ToString());
+			matches.ForEach(m => m.Player1 = _playerRepo.FindById(m.Player1Id));
+			matches.ForEach(m => m.Player2 = _playerRepo.FindById(m.Player2Id));
+			return matches;
+		}
 	}
 }

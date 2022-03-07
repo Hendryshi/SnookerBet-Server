@@ -140,8 +140,13 @@ namespace SnookerBet.Core.Helper
 			if(predict == null || (canChangePredict && oMatch.StMatch != MatchStatus.Ended))
 			{
 				oPredict = new oPredict(oMatch);
-				oPredict.Score1 = 0;
-				oPredict.Score2 = 0;
+
+				if(oMatch.StMatch != MatchStatus.Ended)
+				{
+					oPredict.Score1 = 0;
+					oPredict.Score2 = 0;
+				}
+
 				//if(predict != null)
 				//{
 				//	oPredict.IdPredict = predict.IdPredict;

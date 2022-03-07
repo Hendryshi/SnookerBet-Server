@@ -73,6 +73,14 @@ namespace UnitTests
 			eventRepo.FindById(idEvent, false);
 		}
 
-		
+		[Fact]
+		public void TestGetEndedMatchInDay()
+		{
+			MatchRepo matchRepo = new MatchRepoBuilder().Build();
+			DateTime date = new DateTime(2022, 3, 2);
+
+			List<SnookerBet.Core.Entities.Match> matches = matchRepo.GetEndedMatchInDay(date);
+			Assert.Equal(19, matches.Count);
+		}
 	}
 }

@@ -38,12 +38,6 @@ namespace SnookerBet.Infrastructure.DbContext
 			return (attrib?.Description ?? member.Name).ToLower();
 		}
 
-		public void DoCustomMap<T>()
-		{
-			var map = new CustomPropertyTypeMap(typeof(T), (type, columnName)
-					=> type.GetProperties().FirstOrDefault(prop => GetDescriptionFromAttribute(prop) == columnName.ToLower()));
-			Dapper.SqlMapper.SetTypeMap(typeof(T), map);
-		}
 
 		#region async
 		public async Task<T> QuerySingleOrDefaultAsync<T>(string sql, object param = null)
@@ -104,7 +98,6 @@ namespace SnookerBet.Infrastructure.DbContext
 		{
 			using(var conn = GetConnection())
 			{
-				DoCustomMap<T>();
 				return conn.QuerySingleOrDefault<T>(sql, param);
 			}
 		}
@@ -121,7 +114,6 @@ namespace SnookerBet.Infrastructure.DbContext
 		{
 			using(var conn = GetConnection())
 			{
-				DoCustomMap<T>();
 				var result = conn.Query<T>(sql, param);
 				return result.ToList();
 			}

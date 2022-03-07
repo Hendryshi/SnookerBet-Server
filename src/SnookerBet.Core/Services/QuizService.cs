@@ -9,6 +9,7 @@ using SnookerBet.Core.Entities;
 using SnookerBet.Core.Enumerations;
 using SnookerBet.Core.JsonObjects;
 using SnookerBet.Core.Helper;
+using System.Transactions;
 
 namespace SnookerBet.Core.Services
 {
@@ -125,16 +126,22 @@ namespace SnookerBet.Core.Services
 			if(_quizRepo.FindByEvent(idEvent) != null)
 				throw new ApplicationException($"The quiz for Event[id={idEvent}] has already created");
 
-			Event evt = _snookerService.UpdateEventInfo(idEvent);
-			_snookerService.UpdatePlayersInEvent(idEvent);
+			using(var trans = new TransactionScope())
+			{
+				Event evt = _snookerService.UpdateEventInfo(idEvent);
+				_snookerService.UpdatePlayersInEvent(idEvent);
 
-			int idRoundMin = evt.EventRounds.First().IdRound;
+				int idRoundMin = evt.EventRounds.First().IdRound;
 
-			List<Match> firstRoundMatches = evt.EventMatches.FindAll(m => m.IdRound == idRoundMin);
-			if(firstRoundMatches.Find(m => m.Player1Id == Constants.TBD || m.Player2Id == Constants.TBD) != null)
-				throw new ApplicationException($"Cannot create the quiz for Event[id={idEvent}]. Still has TBD player in first round");
+				List<Match> firstRoundMatches = evt.EventMatches.FindAll(m => m.IdRound == idRoundMin);
+				if(firstRoundMatches.Find(m => m.Player1Id == Constants.TBD || m.Player2Id == Constants.TBD) != null)
+					throw new ApplicationException($"Cannot create the quiz for Event[id={idEvent}]. Still has TBD player in first round");
 
-			return _quizRepo.Save(new Quiz() { IdEvent = idEvent, DtStart = DateTime.Today });
+				Quiz q = _quizRepo.Save(new Quiz() { IdEvent = idEvent, DtStart = DateTime.Today });
+				trans.Complete();
+
+				return q;
+			}
 		}
 
 		
@@ -156,6 +163,90 @@ namespace SnookerBet.Core.Services
 			}
 
 			_gamerRepo.Save(gamer, true);
+		}
+
+		public void CalculateGamerScore(DateTime? dtStamp = null)
+		{
+			if(dtStamp == null) dtStamp = DateTime.Now;
+			_logger.LogInformation($"Start calcuate the score for ended match in day - {dtStamp}");
+			List<Match> matches = _snookerService.GetEndedMatchInDay(dtStamp);
+			if(matches.Count > 0)
+			{
+				_logger.LogInformation($"No match has been found ended in day");
+				return;
+			}
+
+			_logger.LogInformation($"Found {matches.Count} ended in day");
+			int nbTreated = 0;
+
+			Dictionary<int, int> gamerScoreDic = new Dictionary<int, int>();
+			foreach(Match match in matches)
+			{
+				List<Predict> predicts = _predictRepo.FindByMatch(match.IdEvent, match.IdRound, match.Number).FindAll(p => p.idStatus != PredictStatus.Ended);
+				Quiz quiz = _quizRepo.FindByEvent(match.IdEvent);
+
+				if(predicts.Count > 0)
+				{
+					List<Predict> predictWinners = predicts.FindAll(p => p.WinnerId == match.WinnerId).ToList();
+					List<Predict> predictScores = predictWinners.FindAll(p => p.Player1Id == match.Player1Id && p.Player2Id == match.Player2Id && p.Score1 == match.Score1 && p.Score2 == match.Score2).ToList();
+
+					int coef = Math.Abs(match.Score1.Value - match.Score2.Value) == 1 ? 2 : 1;
+					int totalCount = predictWinners.Count + predictScores.Count * 2;
+					decimal winnerPoint = Math.Round((predictWinners.Count > 0 ? ((decimal)100 / totalCount) : 0), 2);
+					decimal scorePoint = winnerPoint * 2;
+					
+					_logger?.LogInformation($"Match[idEvent={match.IdEvent}-idRound={match.IdRound}-Number={match.Number}]: WinnerCorrect: {predictWinners.Count}, ScoreCorrect: {predictScores.Count}, WinnerPoint: {winnerPoint}, ScorePoint: {scorePoint}");
+
+					foreach(Predict p in predicts)
+					{
+						Gamer gamer = _gamerRepo.FindById(p.IdGamer);
+						if(quiz.IdStatus == QuizStatus.InSecondProgress && !gamer.ChangePredict)
+							coef *= 2;
+
+						decimal point = 0;
+
+						if(p.WinnerId == match.WinnerId)
+						{
+							p.WinnerCorrect = true;
+							point += winnerPoint;
+						}
+
+						if(p.Player1Id == match.Player1Id && p.Player2Id == match.Player2Id && p.Score1 == match.Score1 && p.Score2 == match.Score2)
+						{
+							p.ScoreCorrect = true;
+							point += scorePoint;
+						}
+
+						int finalPoint = (int)Math.Round((point * coef));
+						p.Point = finalPoint;
+						p.DtResult = dtStamp;
+						p.idStatus = PredictStatus.Ended;
+
+						if(gamerScoreDic.ContainsKey(gamer.IdGamer))
+							gamerScoreDic[gamer.IdGamer] += finalPoint;
+						else
+							gamerScoreDic.Add(gamer.IdGamer, finalPoint);
+
+						_logger.LogInformation($"Predict[id={p.IdPredict}]: WinnerCorrect={p.WinnerCorrect}, ScoreCorrect={p.ScoreCorrect}, Point={finalPoint}");
+					}
+
+					nbTreated += 1;
+					_predictRepo.SaveList(predicts);
+				}
+			}
+
+			_logger.LogInformation($"{nbTreated} matches have been treated");
+
+			if(gamerScoreDic.Count > 0)
+			{
+				_logger.LogInformation("Saving gamers");
+				foreach(KeyValuePair<int, int> gamerScore in gamerScoreDic)
+				{
+					Gamer gamer = _gamerRepo.FindById(gamerScore.Key);
+					gamer.TotalScore += gamerScore.Value;
+					_gamerRepo.Save(gamer);
+				}
+			}
 		}
 	}
 }

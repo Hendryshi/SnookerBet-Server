@@ -122,6 +122,22 @@ namespace SnookerBet.Web.Controllers
 			}
 		}
 
+		[HttpPost]
+		[Route("CalculateGamerScore")]
+		public IActionResult CalculateGamerScore(DateTime? dtStamp = null)
+		{
+			try
+			{
+				_logger.LogInformation($"Api CalculateGamerScore called - dtStamp={dtStamp}");
+				_quizService.CalculateGamerScore(dtStamp);
+				return Ok("Calculate gamer score finished");
+			}
+			catch(Exception ex)
+			{
+				return HandleError("CalculateGamerScore", ex);
+			}
+		}
+
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public IActionResult HandleError(string apiName, Exception ex)
 		{
