@@ -135,7 +135,7 @@ WHERE p.point IS NOT NULL AND p.idStatus = 1
 GROUP BY p.idGamer, g.gamerName, p.idEvent
 GO
 
-
+update S_Player set lastName = 'TBD' where idPlayer = 376
 update S_Player set chineseName = '塞尔比', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1597.png' where idPlayer = 17
 update S_Player set chineseName = '奥沙利文', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1395.png' where idPlayer = 5
 update S_Player set chineseName = '特鲁姆普', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/24.png' where idPlayer = 12

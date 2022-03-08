@@ -129,8 +129,7 @@ namespace SnookerBet.Core.Services
 			using(var trans = new TransactionScope())
 			{
 				Event evt = _snookerService.UpdateEventInfo(idEvent);
-				_snookerService.UpdatePlayersInEvent(idEvent);
-
+				
 				int idRoundMin = evt.EventRounds.First().IdRound;
 
 				List<Match> firstRoundMatches = evt.EventMatches.FindAll(m => m.IdRound == idRoundMin);
@@ -170,7 +169,7 @@ namespace SnookerBet.Core.Services
 			if(dtStamp == null) dtStamp = DateTime.Now;
 			_logger.LogInformation($"Start calcuate the score for ended match in day - {dtStamp}");
 			List<Match> matches = _snookerService.GetEndedMatchInDay(dtStamp);
-			if(matches.Count > 0)
+			if(matches.Count == 0)
 			{
 				_logger.LogInformation($"No match has been found ended in day");
 				return;

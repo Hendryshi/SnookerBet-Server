@@ -122,7 +122,7 @@ namespace UnitTests
 		[Fact]
 		public void TestGetPredictTrending()
 		{
-			int idEvent = 1134;
+			int idEvent = 1014;
 			List<oPredictGamerTrend> oPredictGamerTrends = _quizService.GetPredictTrending(idEvent);
 			oPredictGamerTrends.ForEach(p => _output.WriteLine(p.ToString()));
 		}

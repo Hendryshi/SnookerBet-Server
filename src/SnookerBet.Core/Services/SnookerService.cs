@@ -154,6 +154,8 @@ namespace SnookerBet.Core.Services
 			if(matches == null || matches.Count == 0)
 				throw new ApplicationException($"Cannot find any match for event [id={idEvent}] from external api");
 
+			UpdatePlayersInEvent(idEvent);
+
 			evt.EventMatches = matches.FindAll(m => m.IdEvent == idEvent);
 
 			return _eventRepo.Save(evt, false);
