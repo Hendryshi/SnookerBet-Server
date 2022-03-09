@@ -90,6 +90,22 @@ namespace SnookerBet.Web.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Route("GetQuizMatch")]
+		public IActionResult GetQuizMatch(int e, int r, int n)
+		{
+			try
+			{
+				_logger.LogInformation($"Api GetQuizMatch called");
+				oQuizMatch quizMatch = _quizService.GetQuizMatch(e,r,n);
+				return Ok(quizMatch);
+			}
+			catch(Exception ex)
+			{
+				return HandleError("GetQuizMatch", ex);
+			}
+		}
+
 		[HttpPost]
 		[Route("CreateQuiz/{idEvent}")]
 		public IActionResult CreateQuiz(int idEvent)
