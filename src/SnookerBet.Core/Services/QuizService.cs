@@ -75,7 +75,7 @@ namespace SnookerBet.Core.Services
 			List<oPredict> oPredicts = new List<oPredict>();
 			foreach(Predict p in predicts)
 			{
-				if((p.Player1Id == match.Player1Id || p.Player2Id == match.Player2Id) && !(p.idStatus == PredictStatus.Ended && p.Point == null))
+				if((match.Player1Id == 376 || match.Player2Id == 376 || p.Player1Id == match.Player1Id || p.Player2Id == match.Player2Id) && !(p.idStatus == PredictStatus.Ended && p.Point == null))
 				{
 					oPredict op = ConvertHelper.ConvertToOPredict(p);
 					op.GamerName = _gamerRepo.FindById(p.IdGamer).GamerName;
