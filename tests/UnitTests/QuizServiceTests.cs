@@ -56,8 +56,8 @@ namespace UnitTests
 			string wechatId = "FeiFei";
 
 			oQuizPredict quizPredict = _quizService.GetQuizPredict(idEvent, wechatId);
-			quizPredict.oGamer.gamerName = "FeiFei";
-			quizPredict.oGamer.wechatName = wechatId;
+			quizPredict.oGamer.GamerName = "FeiFei";
+			quizPredict.oGamer.WechatName = wechatId;
 
 			_quizService.UpdateQuizPredict(quizPredict);
 		}
@@ -76,7 +76,7 @@ namespace UnitTests
 		[Fact]
 		public void TestGetQuizFindByStatus()
 		{
-			List<QuizStatus> quizStatuses = new List<QuizStatus>() { QuizStatus.OpenPredict, QuizStatus.ReOpenPredict };
+			List<QuizStatus> quizStatuses = new List<QuizStatus>() { QuizStatus.OpenPredict };
 			QuizRepo quizRepo = new QuizRepoBuilder().Build();
 
 			List<Quiz> quizzes = quizRepo.FindByStatus(quizStatuses);

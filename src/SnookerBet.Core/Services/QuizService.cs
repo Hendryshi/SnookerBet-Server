@@ -10,6 +10,8 @@ using SnookerBet.Core.Enumerations;
 using SnookerBet.Core.JsonObjects;
 using SnookerBet.Core.Helper;
 using System.Transactions;
+using SnookerBet.Core.Settings;
+using Microsoft.Extensions.Options;
 
 namespace SnookerBet.Core.Services
 {
@@ -20,18 +22,21 @@ namespace SnookerBet.Core.Services
 		private readonly IGamerRepo _gamerRepo;
 		private readonly IPredictRepo _predictRepo;
 		private readonly IAppLogger<QuizService> _logger;
+		private readonly QuizSettings _quizSettings;
 
 		public QuizService(IAppLogger<QuizService> logger,
 			ISnookerService snookerService,
 			IQuizRepo quizRepo,
 			IGamerRepo gamerRepo, 
-			IPredictRepo predictRepo)
+			IPredictRepo predictRepo,
+			IOptionsSnapshot<QuizSettings> quizSettings)
 		{
 			_snookerService = snookerService;
 			_quizRepo = quizRepo;
 			_gamerRepo = gamerRepo;
 			_predictRepo = predictRepo;
 			_logger = logger;
+			_quizSettings = quizSettings.Value;
 		}
 
 		public List<oQuiz> GetAvailableQuiz()
@@ -217,6 +222,13 @@ namespace SnookerBet.Core.Services
 						{
 							p.WinnerCorrect = true;
 							point += winnerPoint;
+
+							if(p.IdRound == 13)
+								point += _quizSettings.QuarterFinalScore;
+							else if(p.IdRound == 14)
+								point += _quizSettings.SemiFinalScore;
+							else if(p.IdRound == 15)
+								point += _quizSettings.FinalScore;
 						}
 
 						if(p.Player1Id == match.Player1Id && p.Player2Id == match.Player2Id && p.Score1 == match.Score1 && p.Score2 == match.Score2)

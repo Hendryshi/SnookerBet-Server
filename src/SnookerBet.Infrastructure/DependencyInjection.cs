@@ -11,6 +11,7 @@ namespace SnookerBet.Infrastructure
 		public static IServiceCollection AddInfrastructureInjection(this IServiceCollection services, IConfiguration _config)
 		{
 			services.Configure<SnookerOrgSettings>(_config.GetSection("SnookerOrgSettings"));
+			services.Configure<QuizSettings>(_config.GetSection("QuizSettings"));
 
 			services.AddScoped<DbContext.DapperContext>();
 			services.AddScoped(typeof(IAppLogger<>), typeof(Logging.LoggerAdapter<>));
