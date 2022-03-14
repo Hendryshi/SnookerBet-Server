@@ -43,6 +43,14 @@ namespace SnookerBet.Infrastructure.Repositories
 			return lstEvtRounds;
 		}
 
+		public EventRound FindById(int idEvent, int idRound)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM S_EventRound WHERE idEvent = @idEvent AND idRound = @idRound");
+
+			return db.QuerySingleOrDefault<EventRound>(sql.ToString(), new { idEvent = idEvent, idRound = idRound });
+		}
+
 		public List<EventRound> FindByEvent(int idEvent)
 		{
 			var sql = new StringBuilder();

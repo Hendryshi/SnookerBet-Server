@@ -37,7 +37,7 @@ namespace SnookerBet.Core.Services
 		public List<oQuiz> GetAvailableQuiz()
 		{
 			List<oQuiz> oQuizzes = new List<oQuiz>();
-			List<Quiz> quizzes = _quizRepo.FindByStatus(new List<QuizStatus> { QuizStatus.OpenPredict, QuizStatus.InProgress, QuizStatus.ReOpenPredict, QuizStatus.InSecondProgress, QuizStatus.Done });
+			List<Quiz> quizzes = _quizRepo.FindByStatus(new List<QuizStatus> { QuizStatus.OpenPredict, QuizStatus.InProgress, QuizStatus.InDoubleProgress, QuizStatus.Done });
 			foreach(Quiz quiz in quizzes)
 			{
 				Event evt = _snookerService.GetEventById(quiz.IdEvent);
@@ -47,7 +47,7 @@ namespace SnookerBet.Core.Services
 			return oQuizzes.OrderByDescending(q => q.IdQuiz).ToList();
 		}
 
-		public oQuizPredict GetQuizPredict(int idEvent, string wechatId)
+		public oQuizPredict GetQuizPredict(int idEvent, string wechatId, bool isReEdit = false)
 		{
 			Quiz quiz = _quizRepo.FindByEvent(idEvent);
 			if(quiz == null)
@@ -56,7 +56,7 @@ namespace SnookerBet.Core.Services
 			Event evt = _snookerService.GetEventById(idEvent, true);
 			Gamer gamer = _gamerRepo.FindByEventAndName(idEvent, wechatId);
 
-			return ConvertHelper.ConvertToQuizPredict(evt, gamer, quiz);
+			return ConvertHelper.ConvertToQuizPredict(evt, gamer, quiz, isReEdit);
 		}
 
 		public oQuizMatch GetQuizMatch(int idEvent, int idRound, int idNumber)
@@ -65,6 +65,7 @@ namespace SnookerBet.Core.Services
 			if(match == null)
 				throw new ApplicationException($"Cannot find match[idEvent={idEvent} - idRound={idRound} - Number={idNumber}] in DB");
 
+			EventRound r = _snookerService.GetRoundInfo(match.IdEvent, match.IdRound);
 			List<Predict> predicts = _predictRepo.FindByMatch(idEvent, idRound, idNumber);
 			List<oPredict> oPredicts = new List<oPredict>();
 			foreach(Predict p in predicts)
@@ -76,12 +77,18 @@ namespace SnookerBet.Core.Services
 					oPredicts.Add(op);
 				}
 			}
-			return new oQuizMatch() { OMatch = ConvertHelper.ConvertToOMatch(match), oPredicts = oPredicts };
+
+			
+			oMatch om = ConvertHelper.ConvertToOMatch(match);
+			if(r != null)
+				om.RoundName = r.RoundName;
+
+			return new oQuizMatch() { OMatch = om, oPredicts = oPredicts };
 		}
 
 		public Quiz GetCurrentQuiz()
 		{
-			List<Quiz> quizzes = _quizRepo.FindByStatus(new List<QuizStatus> { QuizStatus.OpenPredict, QuizStatus.InProgress, QuizStatus.ReOpenPredict, QuizStatus.InSecondProgress, QuizStatus.Done });
+			List<Quiz> quizzes = _quizRepo.FindByStatus(new List<QuizStatus> { QuizStatus.OpenPredict, QuizStatus.InProgress, QuizStatus.InDoubleProgress, QuizStatus.Done });
 			if(quizzes.Count == 0)
 				return null;
 
@@ -148,9 +155,11 @@ namespace SnookerBet.Core.Services
 		{
 			int idEvent = quizPredict.IdEvent;
 			oGamer oGamer = quizPredict.oGamer;
-			Gamer gamer = _gamerRepo.FindByEventAndName(idEvent, oGamer.wechatName, false);
+			Gamer gamer = _gamerRepo.FindByEventAndName(idEvent, oGamer.WechatName, false);
 			if(gamer == null)
-				gamer = new Gamer() { IdEvent = idEvent, WechatName = oGamer.wechatName, GamerName = oGamer.gamerName };
+				gamer = new Gamer() { IdEvent = idEvent, WechatName = oGamer.WechatName, GamerName = oGamer.GamerName };
+			else
+				gamer.NbEditPredict++;
 
 			foreach(oQuizRound qr in quizPredict.oQuizRounds)
 			{
@@ -199,7 +208,7 @@ namespace SnookerBet.Core.Services
 					foreach(Predict p in predicts)
 					{
 						Gamer gamer = _gamerRepo.FindById(p.IdGamer);
-						if(quiz.IdStatus == QuizStatus.InSecondProgress && !gamer.ChangePredict)
+						if(quiz.IdStatus == QuizStatus.InDoubleProgress && gamer.NbEditPredict == 0)
 							coef *= 2;
 
 						decimal point = 0;

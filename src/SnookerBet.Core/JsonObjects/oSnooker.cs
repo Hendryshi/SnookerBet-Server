@@ -37,6 +37,7 @@ namespace SnookerBet.Core.JsonObjects
 	{
 		public int IdEvent { get; set; }
 		public int IdRound { get; set; }
+		public string RoundName { get; set; }
 		public int Number { get; set; }
 		public oPlayer Player1 { get; set; }
 		public int Score1 { get; set; }
@@ -51,6 +52,7 @@ namespace SnookerBet.Core.JsonObjects
 		{
 			this.IdEvent = m.IdEvent;
 			this.IdRound = m.IdRound;
+			this.RoundName = m.RoundName;
 			this.Number = m.Number;
 			Player1 = m.Player1;
 			Score1 = m.Score1;

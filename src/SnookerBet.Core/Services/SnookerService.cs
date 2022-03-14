@@ -15,16 +15,19 @@ namespace SnookerBet.Core.Services
 	{
 		private readonly IEventRepo _eventRepo;
 		private readonly IMatchRepo _matchRepo;
+		private readonly IEventRoundRepo _roundRepo;
 		private readonly IPlayerRepo _playerRepo;
 		private readonly IExternalDataService _externalDataService;
 		private readonly IAppLogger<SnookerService> _logger;
 
 		public SnookerService(IAppLogger<SnookerService> logger, IEventRepo eventRepo,
+			IEventRoundRepo eventRoundRepo,
 			IMatchRepo matchRepo,
 			IPlayerRepo playerRepo,
 			IExternalDataService externalDataService)
 		{
 			_eventRepo = eventRepo;
+			_roundRepo = eventRoundRepo;
 			_matchRepo = matchRepo;
 			_playerRepo = playerRepo;
 			_externalDataService = externalDataService;
@@ -41,6 +44,11 @@ namespace SnookerBet.Core.Services
 			return _matchRepo.FindById(idEvent, idRound, idNumber);
 		}
 
+		public EventRound GetRoundInfo(int idEvent, int idRound)
+		{
+			return _roundRepo.FindById(idEvent, idRound);
+		}
+
 		public oEvent GetEventInfoWithMatches(int idEvent)
 		{
 			Event evt = _eventRepo.FindById(idEvent, true);
@@ -55,7 +63,15 @@ namespace SnookerBet.Core.Services
 			List<oMatch> oMatches = new List<oMatch>();
 			List<Match> matches = _matchRepo.GetOnGoingMatches();
 
-			matches.ForEach(m => oMatches.Add(ConvertHelper.ConvertToOMatch(m)));
+			foreach(Match m in matches)
+			{
+				EventRound r = GetRoundInfo(m.IdEvent, m.IdRound);
+				oMatch om = ConvertHelper.ConvertToOMatch(m);
+				if(r != null)
+					om.RoundName = r.RoundName;
+
+				oMatches.Add(om);
+			}
 
 			return oMatches;
 		}

@@ -12,8 +12,7 @@ namespace SnookerBet.Core.Enumerations
 		Archived = -1,
 		OpenPredict,
 		InProgress,
-		ReOpenPredict,
-		InSecondProgress,
+		InDoubleProgress,
 		Done,
 	}
 

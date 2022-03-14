@@ -12,8 +12,9 @@ namespace SnookerBet.Core.JsonObjects
 	{
 		public int IdGamer { get; set; }
 		public int IdEvent { get; set; }
-		public string wechatName { get; set; }
-		public string gamerName { get; set; }
+		public string WechatName { get; set; }
+		public string GamerName { get; set; }
+		public short NbEditPredict { get; set; }
 
 		[JsonConstructor]
 		public oGamer() { }

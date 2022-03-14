@@ -11,23 +11,21 @@ namespace SnookerBet.Core.Helper
 {
 	public class ConvertHelper
 	{
-		public static oQuizPredict ConvertToQuizPredict(Event evt, Gamer gamer, Quiz quiz)
+		public static oQuizPredict ConvertToQuizPredict(Event evt, Gamer gamer, Quiz quiz, bool isReEdit)
 		{
 			bool isNewGamer = gamer == null;
-
-			if(quiz.IdStatus > QuizStatus.OpenPredict && isNewGamer)
+			if(isNewGamer && quiz.IdStatus != QuizStatus.OpenPredict)
 				return null;
+
+			bool isReadOnly = !isNewGamer && !isReEdit;
 
 			oQuizPredict quizPredict = new oQuizPredict()
 			{
 				IdEvent = evt.IdEvent,
 				EventName = evt.Name,
-				ReadOnly = true
+				ReadOnly = isReadOnly
 			};
 
-			if((isNewGamer && quiz.IdStatus == QuizStatus.OpenPredict) || (!isNewGamer && quiz.IdStatus == QuizStatus.ReOpenPredict))
-				quizPredict.ReadOnly = false;
-			
 			if(!isNewGamer)
 				quizPredict.oGamer = ConvertToOGamer(gamer);
 
@@ -40,8 +38,7 @@ namespace SnookerBet.Core.Helper
 				foreach(oMatch om in oMatches)
 				{
 					Predict predict = isNewGamer ? null : gamer.predicts.Find(p => p.IdEvent == om.IdEvent && p.IdRound == om.IdRound && p.Number == om.Number);
-
-					quizRound.oPredicts.Add(ConvertToOPredict(predict, om, quiz.IdStatus));
+					quizRound.oPredicts.Add(ConvertToOPredict(predict, om, isReEdit));
 				}
 
 				quizPredict.oQuizRounds.Add(quizRound);
@@ -83,7 +80,12 @@ namespace SnookerBet.Core.Helper
 					List<Match> matches = evt.EventMatches.FindAll(m => m.IdRound == er.IdRound);
 					if(matches.Find(m => m.Player1Id != Constants.TBD || m.Player2Id != Constants.TBD) != null)
 					{
-						oRound.oMatches = matches.Select(m => ConvertToOMatch(m)).ToList();
+						foreach(Match m in matches)
+						{
+							oMatch om = ConvertToOMatch(m);
+							om.RoundName = er.RoundName;
+							oRound.oMatches.Add(om);
+						}
 						oEvent.oEventRounds.Add(oRound);
 					}
 				}
@@ -133,11 +135,11 @@ namespace SnookerBet.Core.Helper
 			};
 		}
 
-		public static oPredict ConvertToOPredict(Predict predict, oMatch oMatch, QuizStatus quizStatus, bool canChangePredict = false)
+		public static oPredict ConvertToOPredict(Predict predict, oMatch oMatch, bool isEditPredict = false)
 		{
 			oPredict oPredict = null;
 
-			if(predict == null || (canChangePredict && oMatch.StMatch != MatchStatus.Ended))
+			if(predict == null || (isEditPredict && oMatch.StMatch != MatchStatus.Ended))
 			{
 				oPredict = new oPredict(oMatch);
 
@@ -192,15 +194,20 @@ namespace SnookerBet.Core.Helper
 		{
 			if(p == null) p = new Predict();
 
-			p.IdRound = predict.IdRound;
-			p.IdEvent = predict.IdEvent;
-			p.Number = predict.Number;
+			if(p.IdPredict == 0)
+			{
+				p.IdRound = predict.IdRound;
+				p.IdEvent = predict.IdEvent;
+				p.Number = predict.Number;
+			}
+
 			p.Player1Id = predict.Player1.IdPlayer;
 			p.Score1 = predict.Score1;
 			p.Player2Id = predict.Player2.IdPlayer;
 			p.Score2 = predict.Score2;
 			p.WinnerId = predict.WinnerId;
 			p.idStatus = predict.PredictStatus;
+
 			return p;
 		}
 
@@ -210,8 +217,9 @@ namespace SnookerBet.Core.Helper
 			{
 				IdGamer = gm.IdGamer,
 				IdEvent = gm.IdEvent,
-				gamerName = gm.GamerName,
-				wechatName = gm.WechatName
+				GamerName = gm.GamerName,
+				WechatName = gm.WechatName,
+				NbEditPredict = gm.NbEditPredict
 			};
 		}
 	}

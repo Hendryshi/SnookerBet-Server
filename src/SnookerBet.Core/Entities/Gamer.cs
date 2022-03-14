@@ -18,7 +18,7 @@ namespace SnookerBet.Core.Entities
 		public string WechatName { get; set; }
 		public string GamerName { get; set; }
 		public int TotalScore { get; set; }
-		public bool ChangePredict { get; set; } = false;
+		public short NbEditPredict { get; set; }
 		public DateTime? DtUpdate { get; set; }
 		[Computed]
 		public List<Predict> predicts { get; set; } = new List<Predict>();

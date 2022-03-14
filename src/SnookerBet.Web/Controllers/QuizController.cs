@@ -44,12 +44,12 @@ namespace SnookerBet.Web.Controllers
 
 		[HttpGet]
 		[Route("GetQuizPredict")]
-		public IActionResult GetQuizPredict(int e, string wn)
+		public IActionResult GetQuizPredict(int e, string wn, bool re = false)
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetQuizPredict called: idEvent[{e}] - wechatName[{wn}]");
-				oQuizPredict quizPredict = _quizService.GetQuizPredict(e, wn);
+				_logger.LogInformation($"Api GetQuizPredict called: idEvent[{e}] - wechatName[{wn}] - isReEdit[{re}]");
+				oQuizPredict quizPredict = _quizService.GetQuizPredict(e, wn, re);
 				return Ok(quizPredict);
 			}
 			catch(Exception ex)
@@ -159,7 +159,10 @@ namespace SnookerBet.Web.Controllers
 		{
 			_logger.LogError(ex, $"Error occurred in Api {apiName}");
 
-			return Problem(statusCode: 500, detail: ex.Message);
+			if(ex is ApplicationException)
+				return Problem(statusCode: 503, detail: ex.Message);
+			else
+				return Problem(statusCode: 500, detail: ex.Message);
 		}
 	}
 }

@@ -81,8 +81,7 @@ namespace SnookerBet.Infrastructure.Repositories
 		public List<Match> GetOnGoingMatches()
 		{
 			var sql = new StringBuilder();
-			sql.AppendLine("SELECT * FROM vMatchOnGoing");
-			sql.AppendLine("ORDER BY startDate DESC, endDate ASC ");
+			sql.AppendFormat("EXECUTE GetOnGoingMatch");
 
 			List<Match> matches = db.Query<Match>(sql.ToString());
 			matches.ForEach(m => m.Player1 = _playerRepo.FindById(m.Player1Id));

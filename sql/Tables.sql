@@ -98,7 +98,7 @@ CREATE TABLE G_Gamer
 	wechatName NVARCHAR(100) NULL,
 	gamerName NVARCHAR(100) NULL,
 	totalScore INT NOT NULL DEFAULT 0,
-	changePredict BIT NOT NULL DEFAULT 0,
+	nbEditPredict SMALLINT NOT NULL DEFAULT 0,
 	dtUpdate DATETIME NOT NULL,
 	CONSTRAINT FK_G_Gamer_IdEvent FOREIGN KEY (idEvent) REFERENCES S_Event(idEvent)
 )

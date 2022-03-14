@@ -12,6 +12,7 @@ namespace UnitTests.Builders
 	public class SnookerServiceBuilder
 	{
 		private EventRepo _eventRepo;
+		private EventRoundRepo _roundRepo;
 		private MatchRepo _matchRepo;
 		private PlayerRepo _playerRepo;
 		private ExternalDataService _externalDataService;
@@ -22,13 +23,14 @@ namespace UnitTests.Builders
 			_logger = new LoggerBuilder<SnookerService>().Build();
 			_externalDataService = new ExternalDataServiceBuilder().Build();
 			_eventRepo = new EventRepoBuilder().Build();
+			_roundRepo = new RoundRepoBuilder().Build();
 			_matchRepo = new MatchRepoBuilder().Build();
 			_playerRepo = new PlayerRepoBuilder().Build();
 		}
 
 		public SnookerService Build()
 		{
-			return new SnookerService(_logger, _eventRepo, _matchRepo, _playerRepo, _externalDataService);
+			return new SnookerService(_logger, _eventRepo, _roundRepo, _matchRepo, _playerRepo, _externalDataService);
 		}
 	}
 }
