@@ -26,18 +26,18 @@ AS
 GO
 
 GO
-CREATE PROCEDURE GetGamerTrendingByDay
+ALTER PROCEDURE GetGamerTrendingByDay
 	@idEvent INT = 0,
 	@idGamer INT = 0
 AS
-	SELECT CAST(t.dtResult AS date) dtResult, ISNULL(point, 0) point,
+	SELECT CAST(t.dtResult AS date) dtResult, ISNULL(point, 0) point, p.NbWinnerCorrect, p.NbScoreCorrect,
 	SUM(ISNULL(point, 0)) OVER(ORDER BY CAST(t.dtResult AS date) ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulPoint
 	FROM (
 		SELECT distinct CAST(dtResult as date) dtResult from G_Predict
 		WHERE idEvent = @idEvent AND dtResult is not null
 	) t
 	LEFT JOIN (
-		SELECT CAST(dtResult as date) dtResult, idEvent, idGamer, SUM(point) point
+		SELECT CAST(dtResult as date) dtResult, idEvent, idGamer, SUM(point) point, SUM(CAST(winnerCorrect AS INT)) NbWinnerCorrect, SUM(CAST(scoreCorrect AS INT)) NbScoreCorrect
 		FROM G_Predict
 		WHERE idEvent = @idEvent AND dtResult is not null
 		GROUP BY CAST(dtResult as date), idEvent, idGamer
