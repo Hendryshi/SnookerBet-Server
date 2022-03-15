@@ -8,6 +8,7 @@ using SnookerBet.Core.Interfaces;
 using SnookerBet.Core.Entities;
 using SnookerBet.Core.JsonObjects;
 using SnookerBet.Core.Helper;
+using SnookerBet.Core.Extensions;
 
 namespace SnookerBet.Core.Services
 {
@@ -68,7 +69,7 @@ namespace SnookerBet.Core.Services
 				EventRound r = GetRoundInfo(m.IdEvent, m.IdRound);
 				oMatch om = ConvertHelper.ConvertToOMatch(m);
 				if(r != null)
-					om.RoundName = r.RoundName;
+					om.RoundName = r.RoundName.Translate("Round");
 
 				oMatches.Add(om);
 			}

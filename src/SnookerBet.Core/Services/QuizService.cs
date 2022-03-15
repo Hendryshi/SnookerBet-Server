@@ -12,6 +12,7 @@ using SnookerBet.Core.Helper;
 using System.Transactions;
 using SnookerBet.Core.Settings;
 using Microsoft.Extensions.Options;
+using SnookerBet.Core.Extensions;
 
 namespace SnookerBet.Core.Services
 {
@@ -86,7 +87,7 @@ namespace SnookerBet.Core.Services
 			
 			oMatch om = ConvertHelper.ConvertToOMatch(match);
 			if(r != null)
-				om.RoundName = r.RoundName;
+				om.RoundName = r.RoundName.Translate("Round");
 
 			return new oQuizMatch() { OMatch = om, oPredicts = oPredicts };
 		}

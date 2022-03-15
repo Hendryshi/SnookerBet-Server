@@ -1,5 +1,6 @@
 ﻿using SnookerBet.Core.Entities;
 using SnookerBet.Core.Enumerations;
+using SnookerBet.Core.Extensions;
 using SnookerBet.Core.JsonObjects;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace SnookerBet.Core.Helper
 			oQuizPredict quizPredict = new oQuizPredict()
 			{
 				IdEvent = evt.IdEvent,
-				EventName = evt.Name,
+				EventName = evt.Name.Translate("Event"),
 				ReadOnly = isReadOnly
 			};
 
@@ -53,7 +54,7 @@ namespace SnookerBet.Core.Helper
 			{
 				IdQuiz = quiz.IdQuiz,
 				IdEvent = evt.IdEvent,
-				Name = evt.Name,
+				Name = evt.Name.Translate("Event"),
 				Country = evt.Country,
 				City = evt.City,
 				StartDate = evt.StartDate,
@@ -67,7 +68,7 @@ namespace SnookerBet.Core.Helper
 			oEvent oEvent = new oEvent()
 			{
 				IdEvent = evt.IdEvent,
-				Name = evt.Name,
+				Name = evt.Name.Translate("Event"),
 				StartDate = evt.StartDate,
 				EndDate = evt.EndDate
 			};
@@ -83,7 +84,7 @@ namespace SnookerBet.Core.Helper
 						foreach(Match m in matches)
 						{
 							oMatch om = ConvertToOMatch(m);
-							om.RoundName = er.RoundName;
+							om.RoundName = er.RoundName.Translate("Round");
 							oRound.oMatches.Add(om);
 						}
 						oEvent.oEventRounds.Add(oRound);
@@ -99,7 +100,7 @@ namespace SnookerBet.Core.Helper
 			return new oRound()
 			{
 				IdRound = er.IdRound,
-				RoundName = er.RoundName,
+				RoundName = er.RoundName.Translate("Round"),
 				Distance = er.Distance,
 				Money = er.Money,
 				Currency = er.Currency
