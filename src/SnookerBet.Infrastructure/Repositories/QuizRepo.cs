@@ -33,6 +33,16 @@ namespace SnookerBet.Infrastructure.Repositories
 			return quiz;
 		}
 
+		public QuizSummary SaveSummary(QuizSummary summary)
+		{
+			if(summary.IdSummary == 0)
+				summary.IdSummary = (int)db.InsertEntity(summary);
+			else if(!db.UpdateEntity(summary))
+				throw new Exception($"QuizSummary not found in DB: {summary.ToString()}");
+
+			return summary;
+		}
+
 		public Quiz FindByEvent(int idEvent)
 		{
 			var sql = new StringBuilder();
@@ -63,6 +73,14 @@ namespace SnookerBet.Infrastructure.Repositories
 			sql.AppendFormat("EXECUTE GetGamerTrendingByDay @idEvent={0}, @idGamer={1}", idEvent, idGamer);
 
 			return db.Query<oPredictByDay>(sql.ToString());
+		}
+
+		public QuizSummary GetLastSummary(int idEvent)
+		{
+			var sql = new StringBuilder();
+			sql.AppendLine(@"SELECT * FROM G_QuizSummary WHERE idEvent = @idEvent ORDER BY dtResult DESC");
+
+			return db.QuerySingleOrDefault<QuizSummary>(sql.ToString(), new { idEvent = idEvent });
 		}
 	}
 }

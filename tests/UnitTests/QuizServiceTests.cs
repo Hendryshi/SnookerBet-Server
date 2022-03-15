@@ -140,5 +140,13 @@ namespace UnitTests
 		{
 			_quizService.CalculateGamerScore();
 		}
+
+		[Fact]
+		public void TestInsertSummary()
+		{
+			QuizSummary summary = new QuizSummary() { IdEvent = 1014, DtResult = DateTime.Now, DescSummary = "test" };
+			QuizRepo quizRepo = new QuizRepoBuilder().Build();
+			quizRepo.SaveSummary(summary);
+		}
 	}
 }

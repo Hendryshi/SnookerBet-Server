@@ -155,6 +155,10 @@ namespace SnookerBet.Core.Services
 			}
 		}
 
+		public QuizSummary GetLastestSummary(int idEvent)
+		{
+			return _quizRepo.GetLastSummary(idEvent);
+		}
 		
 		public void UpdateQuizPredict(oQuizPredict quizPredict)
 		{
@@ -179,9 +183,16 @@ namespace SnookerBet.Core.Services
 		}
 
 		public void CalculateGamerScore(DateTime? dtStamp = null)
+
 		{
 			if(dtStamp == null) dtStamp = DateTime.Now;
+
+			_logger.LogInformation("************************************************************");
+			_logger.LogInformation("************************************************************");
 			_logger.LogInformation($"Start calcuate the score for ended match in day - {dtStamp}");
+			_logger.LogInformation("************************************************************");
+			_logger.LogInformation("************************************************************");
+
 			List<Match> matches = _snookerService.GetEndedMatchInDay(dtStamp);
 			if(matches.Count == 0)
 			{
@@ -189,17 +200,22 @@ namespace SnookerBet.Core.Services
 				return;
 			}
 
-			_logger.LogInformation($"Found {matches.Count} ended in day");
+			_logger.LogInformation($"Found {matches.Count} matches ended in day");
 			int nbTreated = 0;
 
 			Dictionary<int, int> gamerScoreDic = new Dictionary<int, int>();
+			QuizSummary summary = new QuizSummary() { DtResult = dtStamp.Value };
+
 			foreach(Match match in matches)
 			{
 				List<Predict> predicts = _predictRepo.FindByMatch(match.IdEvent, match.IdRound, match.Number).FindAll(p => p.idStatus != PredictStatus.Ended);
 				Quiz quiz = _quizRepo.FindByEvent(match.IdEvent);
+				summary.IdEvent = match.IdEvent;
+				if(string.IsNullOrEmpty(summary.DescSummary)) summary.DescSummary = "赛果:";
 
 				if(predicts.Count > 0)
 				{
+					
 					List<Predict> predictWinners = predicts.FindAll(p => p.WinnerId == match.WinnerId).ToList();
 					List<Predict> predictScores = predictWinners.FindAll(p => p.Player1Id == match.Player1Id && p.Player2Id == match.Player2Id && p.Score1 == match.Score1 && p.Score2 == match.Score2).ToList();
 
@@ -208,7 +224,11 @@ namespace SnookerBet.Core.Services
 					decimal winnerPoint = Math.Round((predictWinners.Count > 0 ? ((decimal)100 / totalCount) : 0), 2);
 					decimal scorePoint = winnerPoint * 2;
 					
-					_logger?.LogInformation($"Match[idEvent={match.IdEvent}-idRound={match.IdRound}-Number={match.Number}]: WinnerCorrect: {predictWinners.Count}, ScoreCorrect: {predictScores.Count}, WinnerPoint: {winnerPoint}, ScorePoint: {scorePoint}");
+					_logger?.LogInformation($"Match[idEvent={match.IdEvent}-idRound={match.IdRound}-Number={match.Number}]: Score: {match.Score1}-{match.Score2}, NbWinnerCorrect: {predictWinners.Count}, NbScoreCorrect: {predictScores.Count}, WinnerPoint: {winnerPoint}, ScorePoint: {scorePoint}");
+					string player1Name = ConvertHelper.ConvertToOPlayer(match.Player1).Name;
+					string player2Name = ConvertHelper.ConvertToOPlayer(match.Player2).Name;
+
+					summary.DescSummary += $" {player1Name} {match.Score1}:{match.Score2} {player2Name},";
 
 					foreach(Predict p in predicts)
 					{
@@ -247,7 +267,7 @@ namespace SnookerBet.Core.Services
 						else
 							gamerScoreDic.Add(gamer.IdGamer, finalPoint);
 
-						_logger.LogInformation($"Predict[id={p.IdPredict}]: WinnerCorrect={p.WinnerCorrect}, ScoreCorrect={p.ScoreCorrect}, Point={finalPoint}");
+						_logger.LogInformation($"Predict[id={p.IdPredict}-IdGamer={p.IdGamer}]:Score: {p.Score1}-{p.Score2}, IsWinnerCorrect={p.WinnerCorrect}, IsScoreCorrect={p.ScoreCorrect}, Coef={coef}, Point={finalPoint}");
 					}
 
 					nbTreated += 1;
@@ -260,13 +280,26 @@ namespace SnookerBet.Core.Services
 			if(gamerScoreDic.Count > 0)
 			{
 				_logger.LogInformation("Saving gamers");
+				summary.DescSummary.TrimEnd(',');
+				summary.DescSummary += " 积分:";
 				foreach(KeyValuePair<int, int> gamerScore in gamerScoreDic)
 				{
 					Gamer gamer = _gamerRepo.FindById(gamerScore.Key);
+
+					summary.DescSummary += $" {gamer.GamerName}: {gamerScore.Value},";
+
 					gamer.TotalScore += gamerScore.Value;
 					_gamerRepo.Save(gamer);
 				}
+				summary.DescSummary.TrimEnd(',');
+				_quizRepo.SaveSummary(summary);
 			}
+
+			_logger.LogInformation("************************************************************");
+			_logger.LogInformation("************************************************************");
+			_logger.LogInformation($"End calcuate the score for ended match in day - {dtStamp}");
+			_logger.LogInformation("************************************************************");
+			_logger.LogInformation("************************************************************");
 		}
 	}
 }

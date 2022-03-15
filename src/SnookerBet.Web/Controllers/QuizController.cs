@@ -106,6 +106,21 @@ namespace SnookerBet.Web.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Route("GetLastDayResult")]
+		public IActionResult GetLastDayResult(int idEvent)
+		{
+			try
+			{
+				_logger.LogInformation($"Api GetLastDayResult called idEvent[{idEvent}]");
+				return Ok(_quizService.GetLastestSummary(idEvent));
+			}
+			catch(Exception ex)
+			{
+				return HandleError("GetLastDayResult", ex);
+			}
+		}
+
 		[HttpPost]
 		[Route("CreateQuiz/{idEvent}")]
 		public IActionResult CreateQuiz(int idEvent)
