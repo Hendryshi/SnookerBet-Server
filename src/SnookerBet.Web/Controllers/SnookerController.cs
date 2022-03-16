@@ -33,7 +33,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetEventWithMatch called: idEvent[{idEvent}]");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetEventWithMatch called: idEvent[{idEvent}] - [{wechatId}]");
 				oEvent outputEvent = _snookerService.GetEventInfoWithMatches(idEvent);
 				return Ok(outputEvent);
 			}
@@ -49,7 +50,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetOnGoingMatch called");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetOnGoingMatch called - [{wechatId}]");
 				List<oMatch> oMatches = _snookerService.GetOnGoingMatch();
 				return Ok(oMatches);
 			}

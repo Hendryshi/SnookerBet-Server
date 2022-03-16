@@ -31,7 +31,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetQuizEvent called");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetQuizEvent called - [{wechatId}]");
 				List<oQuiz> quiz = _quizService.GetAvailableQuiz();
 				return Ok(quiz);
 			}
@@ -48,7 +49,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetQuizPredict called: idEvent[{e}] - wechatName[{wn}] - isReEdit[{re}]");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetQuizPredict called: idEvent[{e}] - wechatName[{wn}] - isReEdit[{re}] - [{wechatId}]");
 				oQuizPredict quizPredict = _quizService.GetQuizPredict(e, wn, re);
 				return Ok(quizPredict);
 			}
@@ -64,7 +66,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetQuizSummary called");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetQuizSummary called - [{wechatId}]");
 				List<oPredictStat> oPredictStats = _quizService.GetPredictSummary(idEvent);
 				return Ok(oPredictStats);
 			}
@@ -80,7 +83,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetQuizTrending called");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetQuizTrending called - [{wechatId}]");
 				List<oPredictGamerTrend> oPredictGamerTrends = _quizService.GetPredictTrending(idEvent);
 				return Ok(oPredictGamerTrends);
 			}
@@ -96,7 +100,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetQuizMatch called");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetQuizMatch called - [{wechatId}]");
 				oQuizMatch quizMatch = _quizService.GetQuizMatch(e,r,n);
 				return Ok(quizMatch);
 			}
@@ -112,7 +117,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api GetLastDayResult called idEvent[{idEvent}]");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api GetLastDayResult called idEvent[{idEvent}] - [{wechatId}]");
 				return Ok(_quizService.GetLastestSummary(idEvent));
 			}
 			catch(Exception ex)
@@ -127,7 +133,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api CreateQuiz called: idEvent[{idEvent}]");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api CreateQuiz called: idEvent[{idEvent}] - [{wechatId}]");
 				_quizService.CreateQuiz(idEvent);
 				return Ok($"Quiz for event[{idEvent}] has been created in DB");
 			}
@@ -143,7 +150,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api UpdateQuizPredict called");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api UpdateQuizPredict called - [{wechatId}]");
 				_quizService.UpdateQuizPredict(quizPredict);
 				return Ok("QuizPredict has been saved in DB");
 			}
@@ -159,7 +167,8 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api CalculateGamerScore called - dtStamp={dtStamp}");
+				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
+				_logger.LogInformation($"Api CalculateGamerScore called - dtStamp={dtStamp} - [{wechatId}]");
 				_quizService.CalculateGamerScore(dtStamp);
 				return Ok("Calculate gamer score finished");
 			}
