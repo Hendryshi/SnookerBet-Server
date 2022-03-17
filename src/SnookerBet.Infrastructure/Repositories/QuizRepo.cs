@@ -59,12 +59,15 @@ namespace SnookerBet.Infrastructure.Repositories
 			return db.Query<Quiz>(sql.ToString(), new { status = quizStatuses });
 		}
 
-		public List<oPredictStat> GetPredictSummary(int idEvent)
+		public List<oPredictStat> GetPredictSummary(int idEvent, int idGamer = 0)
 		{
 			var sql = new StringBuilder();
 			sql.AppendLine(@"SELECT * FROM vPredictSummary WHERE idEvent = @idEvent");
 
-			return db.Query<oPredictStat>(sql.ToString(), new { idEvent = idEvent });
+			if(idGamer != 0)
+				sql.AppendLine(" AND idGamer = @idGamer");
+
+			return db.Query<oPredictStat>(sql.ToString(), new { idEvent = idEvent, idGamer = idGamer });
 		}
 
 		public List<oPredictByDay> GetPredictPointByDay(int idEvent, int idGamer)

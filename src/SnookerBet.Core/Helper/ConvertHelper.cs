@@ -80,15 +80,16 @@ namespace SnookerBet.Core.Helper
 					oEventRound oRound = new oEventRound(ConvertToORound(er));
 					List<Match> matches = evt.EventMatches.FindAll(m => m.IdRound == er.IdRound);
 					if(matches.Find(m => m.Player1Id != Constants.TBD || m.Player2Id != Constants.TBD) != null)
+						oRound.NoTBDMatch = true;
+
+					foreach(Match m in matches)
 					{
-						foreach(Match m in matches)
-						{
-							oMatch om = ConvertToOMatch(m);
-							om.RoundName = er.RoundName.Translate("Round");
-							oRound.oMatches.Add(om);
-						}
-						oEvent.oEventRounds.Add(oRound);
+						oMatch om = ConvertToOMatch(m);
+						om.RoundName = er.RoundName.Translate("Round");
+						oRound.oMatches.Add(om);
 					}
+					oEvent.oEventRounds.Add(oRound);
+
 				}
 				oEvent.oEventRounds = oEvent.oEventRounds.OrderByDescending(o => o.IdRound).ToList();
 			}
@@ -130,7 +131,7 @@ namespace SnookerBet.Core.Helper
 			return new oPlayer()
 			{
 				IdPlayer = player.IdPlayer,
-				Name = player.ChineseName ?? (player.LastName ?? player.FirstName),
+				Name = string.IsNullOrEmpty(player.ChineseName) ? (player.LastName ?? player.FirstName) : player.ChineseName,
 				Photo = player.Photo,
 				Rank = player.SeasonRank
 			};

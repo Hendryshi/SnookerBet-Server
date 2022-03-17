@@ -11,7 +11,7 @@ namespace SnookerBet.Core.Interfaces
 		List<Quiz> FindByStatus(List<QuizStatus> quizStatuses);
 		QuizSummary GetLastSummary(int idEvent);
 		List<oPredictByDay> GetPredictPointByDay(int idEvent, int idGamer);
-		List<oPredictStat> GetPredictSummary(int idEvent);
+		List<oPredictStat> GetPredictSummary(int idEvent, int idGamer = 0);
 		Quiz Save(Quiz quiz);
 		QuizSummary SaveSummary(QuizSummary summary);
 	}

@@ -76,7 +76,7 @@ namespace SnookerBet.Core.Services
 			List<oPredict> oPredicts = new List<oPredict>();
 			foreach(Predict p in predicts)
 			{
-				if((match.Player1Id == 376 || match.Player2Id == 376 || p.Player1Id == match.Player1Id || p.Player2Id == match.Player2Id) && !(p.idStatus == PredictStatus.Ended && p.Point == null))
+				if((match.Player1Id == Constants.TBD || match.Player2Id == Constants.TBD || p.Player1Id == match.Player1Id || p.Player2Id == match.Player2Id) && !(p.idStatus == PredictStatus.Ended && p.Point == null))
 				{
 					oPredict op = ConvertHelper.ConvertToOPredict(p);
 					op.GamerName = _gamerRepo.FindById(p.IdGamer).GamerName;
@@ -109,8 +109,19 @@ namespace SnookerBet.Core.Services
 			if(idEvent == null) idEvent = GetCurrentQuiz()?.IdEvent;
 			
 			if(idEvent != null)
-				oPredictStats = _quizRepo.GetPredictSummary(idEvent.Value);
-			
+			{
+				List<Gamer> gamers = _gamerRepo.LoadAllByEvent(idEvent.Value, false);
+				foreach(Gamer gamer in gamers)
+				{
+					oPredictStat predictStat = _quizRepo.GetPredictSummary(idEvent.Value, gamer.IdGamer).FirstOrDefault();
+
+					if(predictStat == null)
+						predictStat = new oPredictStat() { IdEvent = idEvent.Value, IdGamer = gamer.IdGamer, GamerName = gamer.GamerName };
+
+					oPredictStats.Add(predictStat);
+				}
+			}
+
 			return oPredictStats.OrderByDescending(p => p.TotalPoint).ToList();
 		}
 

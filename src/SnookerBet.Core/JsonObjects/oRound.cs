@@ -42,6 +42,7 @@ namespace SnookerBet.Core.JsonObjects
 	public class oEventRound : oRound
 	{
 		public List<oMatch> oMatches { get; set; } = new List<oMatch>();
+		public bool NoTBDMatch { get; set; }
 
 		public oEventRound(oRound r) : base(r) { }
 

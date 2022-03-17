@@ -160,3 +160,109 @@ update S_Player set chineseName = '颜炳涛', photo='https://4d9e5aaf64f4cd6ea36e-
 update S_Player set chineseName = '宾汉姆', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/743.png' where idPlayer = 30
 update S_Player set chineseName = '麦克吉尔', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2715.png' where idPlayer = 22
 update S_Player set chineseName = '卢卡·布雷切尔', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2709.png' where idPlayer = 101
+update S_Player set chineseName = '利索夫斯基', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2702.png' where idPlayer = 85
+update S_Player set chineseName = '沃顿', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1564.png' where idPlayer = 62
+update S_Player set chineseName = '瓦菲', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3395.png' where idPlayer = 666
+update S_Player set chineseName = '吉尔伯特', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/320.png' where idPlayer = 118
+update S_Player set chineseName = '古尔德', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1618.png' where idPlayer = 27
+update S_Player set chineseName = '瑞恩戴', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/546.png' where idPlayer = 68
+update S_Player set chineseName = '乔佩里', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1400.png' where idPlayer = 168
+update S_Player set chineseName = '周跃龙', photo='https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39096.png' where idPlayer = 906
+update S_Player set chineseName = '阿里卡特', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/822.png' where idplayer = 158
+update S_Player set chineseName = '乔丹布朗', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2541.png' where idplayer = 58
+update S_Player set chineseName = '汤姆福德', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1563.png' where idplayer = 8
+update S_Player set chineseName = '吉米·罗伯逊', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1965.png' where idplayer = 93
+update S_Player set chineseName = '加里威尔逊', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1649.png' where idplayer = 546
+update S_Player set chineseName = '梁文博', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2457.png' where idplayer = 200
+update S_Player set chineseName = '塞尔特', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1835.png' where idplayer = 47
+update S_Player set chineseName = '丁俊晖', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1734.png' where idplayer = 224
+update S_Player set chineseName = '鲁宁', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39094.png' where idplayer = 908
+update S_Player set chineseName = '马夫林', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1640.png' where idplayer = 61
+update S_Player set chineseName = '范正一', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/40614.png' where idplayer = 1417
+update S_Player set chineseName = '多特', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/673.png' where idplayer = 52
+update S_Player set chineseName = '肖国栋', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2528.png' where idplayer = 24
+update S_Player set chineseName = '诺蓬桑坎', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2742.png' where idplayer = 208
+update S_Player set chineseName = '马克金', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/216.png' where idplayer = 28
+update S_Player set chineseName = '杰米琼斯', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2455.png' where idplayer = 10
+update S_Player set chineseName = '海菲尔德', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2727.png' where idplayer = 45
+update S_Player set chineseName = '克雷吉', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2728.png' where idplayer = 109
+update S_Player set chineseName = '李行', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2532.png' where idplayer = 295
+update S_Player set chineseName = '米尔金斯', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/759.png' where idplayer = 92
+update S_Player set chineseName = '伍拉斯顿', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2248.png' where idplayer = 19
+update S_Player set chineseName = '汉密尔顿', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/167.png' where idplayer = 115
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2858.png' where idplayer = 239
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2696.png' where idplayer = 90
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/33144.png' where idplayer = 894
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3117.png' where idplayer = 608
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39670.png' where idplayer = 1038
+update S_Player set chineseName = '马克戴维斯', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/106.png' where idplayer = 15
+update S_Player set chineseName = '乔伊斯', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1870.png' where idplayer = 48
+update S_Player set chineseName = '塔猜亚', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2549.png' where idplayer = 217
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2700.png' where idplayer = 128
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2530.png' where idplayer = 67
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/64479.png' where idplayer = 1763
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/144.png' where idplayer = 120
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/40287.png' where idplayer = 1257
+update S_Player set chineseName = '马修斯蒂文斯', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/706.png' where idplayer = 9
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/806.png' where idplayer = 25
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2529.png' where idplayer = 96
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/33154.png' where idplayer = 1044
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1092.png' where idplayer = 33
+update S_Player set chineseName = '克拉克', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3406.png' where idplayer = 106
+update S_Player set chineseName = '吕浩天', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39097.png' where idplayer = 905
+update S_Player set chineseName = '田鹏飞', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2456.png' where idplayer = 218
+update S_Player set chineseName = '霍尔特', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/841.png' where idplayer = 125
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3119.png' where idplayer = 592
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3396.png' where idplayer = 724
+update S_Player set chineseName = '曹雨鹏', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2690.png' where idplayer = 507
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/960.png' where idplayer = 63
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/100020.png' where idplayer = 2607
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1794.png' where idplayer = 26
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/184.png' where idplayer = 51
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3086.png' where idplayer = 605
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1101.png' where idplayer = 14
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1122.png' where idplayer = 170
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/99922.png' where idplayer = 2557
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/64121.png' where idplayer = 1567
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/40397.png' where idplayer = 1323
+update S_Player set chineseName = '吴一则', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/99706.png' where idplayer = 2469
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/933.png' where idplayer = 50
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39709.png' where idplayer = 1082
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2704.png' where idplayer = 49
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1884.png' where idplayer = 2335
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3119.png' where idplayer = 37
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/711.png' where idplayer = 520
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/3162.png' where idplayer = 593
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39819.png' where idplayer = 1122
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/99775.png' where idplayer = 2470
+update S_Player set chineseName = '袁思俊', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39759.png' where idplayer = 1108
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/40553.png' where idplayer = 1407
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2703.png' where idplayer = 89
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/98485.png' where idplayer = 2166
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2924.png' where idplayer = 448
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2755.png' where idplayer = 163
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/98349.png' where idplayer = 2134
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/64772.png' where idplayer = 1981
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/100285.png' where idplayer = 2751
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1633.png' where idplayer = 131
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1971.png' where idplayer = 534
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1468.png' where idplayer = 38
+update S_Player set chineseName = '张安达', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2558.png' where idplayer = 81
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39644.png' where idplayer = 1045
+update S_Player set chineseName = '亨得利', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1157.png' where idplayer = 153
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/99112.png' where idplayer = 1889
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2485.png' where idplayer = 79
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1200.png' where idplayer = 6
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/2701.png' where idplayer = 87
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/693.png' where idplayer = 21
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/99750.png' where idplayer = 2498
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1824.png' where idplayer = 65
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/99269.png' where idplayer = 2340
+update S_Player set chineseName = '吉米怀特', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1557.png' where idplayer = 20
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1368.png' where idplayer = 204
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/39507.png' where idplayer = 933
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/99790.png' where idplayer = 2499
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/40832.png' where idplayer = 1485
+update S_Player set chineseName = '', photo = 'https://4d9e5aaf64f4cd6ea36e-a4f331decd676ada08548b37a013de11.ssl.cf3.rackcdn.com/1048.png' where idplayer = 175
+update S_Player set chineseName = '傅家俊', photo = '' where idplayer = 4
+update S_Player set chineseName = '', photo = '' where idplayer = 18
