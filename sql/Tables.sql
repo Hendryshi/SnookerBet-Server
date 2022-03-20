@@ -129,7 +129,8 @@ CREATE TABLE G_QuizSummary
 	idSummary INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	idEvent int NOT NULL,
 	dtResult DATETIME NOT NULL,
-	descSummary NVARCHAR(MAX)
+	descMatchSummary NVARCHAR(MAX),
+	descPointSummary NVARCHAR(MAX)
 )
 
 GO

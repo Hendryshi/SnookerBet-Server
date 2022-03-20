@@ -16,7 +16,8 @@ namespace SnookerBet.Core.Entities
 		public int IdSummary { get; set; }
 		public int IdEvent { get; set; }
 		public DateTime DtResult { get; set; }
-		public string DescSummary { get; set; }
+		public string DescMatchSummary { get; set; }
+		public string DescPointSummary { get; set; }
 	}
 
 }

@@ -36,11 +36,9 @@ namespace SnookerBet.Infrastructure.Repositories
 			List<Match> lstMatches = new List<Match>();
 			using(var trans = new TransactionScope())
 			{
-				DeleteByEvent(idEvent);
-
 				foreach(Match match in matches)
 					lstMatches.Add(Save(match));
-
+				
 				trans.Complete();
 			}
 			return lstMatches;

@@ -166,14 +166,38 @@ namespace SnookerBet.Core.Services
 				throw new ApplicationException($"Cannot find any round info for event [id={idEvent}] from external api");
 
 			evt.EventRounds = eventRounds.FindAll(r => r.IdEvent == idEvent && r.Distance > 0);
-			
+
 			List<Match> matches = _externalDataService.GetMatchesInEvent(idEvent);
 			if(matches == null || matches.Count == 0)
 				throw new ApplicationException($"Cannot find any match for event [id={idEvent}] from external api");
 
 			UpdatePlayersInEvent(idEvent);
 
-			evt.EventMatches = matches.FindAll(m => m.IdEvent == idEvent);
+			foreach(Match m in matches.FindAll(m => m.IdEvent == idEvent))
+			{
+				Match mInDb = _matchRepo.FindById(m.IdEvent, m.IdRound, m.Number);
+				if(mInDb != null)
+				{
+					mInDb.Player1Id = m.Player1Id;
+					mInDb.Score1 = m.Score1;
+					mInDb.Player2Id = m.Player2Id;
+					mInDb.Score2 = m.Score2;
+					mInDb.WinnerId = m.WinnerId;
+					mInDb.Unfinished = m.Unfinished;
+					mInDb.OnBreak = m.OnBreak;
+					mInDb.InitDate = m.InitDate;
+					mInDb.ModDate = m.ModDate;
+					mInDb.StartDate = m.StartDate;
+					mInDb.EndDate = m.EndDate;
+					mInDb.ScheduledDate = m.ScheduledDate;
+					mInDb.note = m.note;
+					mInDb.extendedNote = m.extendedNote;
+				}
+				else
+					mInDb = m;
+
+				evt.EventMatches.Add(mInDb);
+			}
 
 			return _eventRepo.Save(evt, false);
 		}

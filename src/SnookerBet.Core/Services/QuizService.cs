@@ -167,9 +167,11 @@ namespace SnookerBet.Core.Services
 			}
 		}
 
-		public QuizSummary GetLastestSummary(int idEvent)
+		public List<QuizSummary> GetQuizSummary(int? idEvent = null)
 		{
-			return _quizRepo.GetLastSummary(idEvent);
+			if(idEvent == null) idEvent = GetCurrentQuiz()?.IdEvent;
+
+			return _quizRepo.GetQuizSummary(idEvent.Value);
 		}
 		
 		public void UpdateQuizPredict(oQuizPredict quizPredict)
@@ -223,15 +225,13 @@ namespace SnookerBet.Core.Services
 				List<Predict> predicts = _predictRepo.FindByMatch(match.IdEvent, match.IdRound, match.Number).FindAll(p => p.idStatus != PredictStatus.Ended);
 				Quiz quiz = _quizRepo.FindByEvent(match.IdEvent);
 				summary.IdEvent = match.IdEvent;
-				if(string.IsNullOrEmpty(summary.DescSummary)) summary.DescSummary = "赛果:";
-
+				
 				if(predicts.Count > 0)
 				{
 					
 					List<Predict> predictWinners = predicts.FindAll(p => p.WinnerId == match.WinnerId).ToList();
 					List<Predict> predictScores = predictWinners.FindAll(p => p.Player1Id == match.Player1Id && p.Player2Id == match.Player2Id && p.Score1 == match.Score1 && p.Score2 == match.Score2).ToList();
 
-					int coef = Math.Abs(match.Score1.Value - match.Score2.Value) == 1 ? 2 : 1;
 					int totalCount = predictWinners.Count + predictScores.Count * 2;
 					decimal winnerPoint = Math.Round((predictWinners.Count > 0 ? ((decimal)100 / totalCount) : 0), 2);
 					decimal scorePoint = winnerPoint * 2;
@@ -240,10 +240,11 @@ namespace SnookerBet.Core.Services
 					string player1Name = ConvertHelper.ConvertToOPlayer(match.Player1).Name;
 					string player2Name = ConvertHelper.ConvertToOPlayer(match.Player2).Name;
 
-					summary.DescSummary += $" {player1Name} {match.Score1}:{match.Score2} {player2Name},";
+					summary.DescMatchSummary += $"{player1Name} {match.Score1}:{match.Score2} {player2Name},   ";
 
 					foreach(Predict p in predicts)
 					{
+						int coef = Math.Abs(match.Score1.Value - match.Score2.Value) == 1 ? 2 : 1;
 						Gamer gamer = _gamerRepo.FindById(p.IdGamer);
 						if(quiz.IdStatus == QuizStatus.InDoubleProgress && gamer.NbEditPredict == 0)
 							coef *= 2;
@@ -287,23 +288,23 @@ namespace SnookerBet.Core.Services
 				}
 			}
 
+			summary.DescMatchSummary = summary.DescMatchSummary.TrimEnd().TrimEnd(',');
+
 			_logger.LogInformation($"{nbTreated} matches have been treated");
 
 			if(gamerScoreDic.Count > 0)
 			{
 				_logger.LogInformation("Saving gamers");
-				summary.DescSummary.TrimEnd(',');
-				summary.DescSummary += " 积分:";
 				foreach(KeyValuePair<int, int> gamerScore in gamerScoreDic)
 				{
 					Gamer gamer = _gamerRepo.FindById(gamerScore.Key);
 
-					summary.DescSummary += $" {gamer.GamerName}: {gamerScore.Value},";
+					summary.DescPointSummary += $"{gamer.GamerName}: {gamerScore.Value},   ";
 
 					gamer.TotalScore += gamerScore.Value;
 					_gamerRepo.Save(gamer);
 				}
-				summary.DescSummary.TrimEnd(',');
+				summary.DescPointSummary = summary.DescPointSummary.TrimEnd().TrimEnd(',');
 				_quizRepo.SaveSummary(summary);
 			}
 

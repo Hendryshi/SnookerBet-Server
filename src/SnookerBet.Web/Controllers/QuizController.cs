@@ -112,18 +112,18 @@ namespace SnookerBet.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("GetLastDayResult")]
-		public IActionResult GetLastDayResult(int idEvent)
+		[Route("GetQuizReport")]
+		public IActionResult GetQuizReport(int? idEvent = null)
 		{
 			try
 			{
 				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
-				_logger.LogInformation($"Api GetLastDayResult called idEvent[{idEvent}] - [{wechatId}]");
-				return Ok(_quizService.GetLastestSummary(idEvent));
+				_logger.LogInformation($"Api GetQuizReport called idEvent[{idEvent}] - [{wechatId}]");
+				return Ok(_quizService.GetQuizSummary(idEvent));
 			}
 			catch(Exception ex)
 			{
-				return HandleError("GetLastDayResult", ex);
+				return HandleError("GetQuizReport", ex);
 			}
 		}
 
@@ -152,6 +152,10 @@ namespace SnookerBet.Web.Controllers
 			{
 				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
 				_logger.LogInformation($"Api UpdateQuizPredict called - [{wechatId}]");
+
+				if(quizPredict == null || quizPredict.oGamer == null || string.IsNullOrEmpty(quizPredict.oGamer.WechatName))
+					throw new ApplicationException("quizPredict not validate");
+
 				_quizService.UpdateQuizPredict(quizPredict);
 				return Ok("QuizPredict has been saved in DB");
 			}

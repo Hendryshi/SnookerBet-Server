@@ -15,6 +15,6 @@ namespace SnookerBet.Core.Interfaces
 		List<oPredictStat> GetPredictSummary(int? idEvent = null);
 		void CalculateGamerScore(DateTime? dtStamp = null);
 		oQuizPredict GetQuizPredict(int idEvent, string wechatId, bool isReEdit = false);
-		QuizSummary GetLastestSummary(int idEvent);
+		List<QuizSummary> GetQuizSummary(int? idEvent = null);
 	}
 }

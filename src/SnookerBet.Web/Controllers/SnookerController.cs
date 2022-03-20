@@ -115,7 +115,7 @@ namespace SnookerBet.Web.Controllers
 		{
 			try
 			{
-				_logger.LogInformation($"Api UpdateEventInfo called: season[{idEvent}]");
+				_logger.LogInformation($"Api UpdateEventInfo called: season[{idEvent}]");	
 				_snookerService.UpdateEventInfo(idEvent);
 				return Ok($"Event[{idEvent}] and its matches have been updated in DB");
 			}

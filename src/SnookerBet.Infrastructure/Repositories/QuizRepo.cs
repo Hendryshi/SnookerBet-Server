@@ -78,12 +78,12 @@ namespace SnookerBet.Infrastructure.Repositories
 			return db.Query<oPredictByDay>(sql.ToString());
 		}
 
-		public QuizSummary GetLastSummary(int idEvent)
+		public List<QuizSummary> GetQuizSummary(int idEvent)
 		{
 			var sql = new StringBuilder();
 			sql.AppendLine(@"SELECT * FROM G_QuizSummary WHERE idEvent = @idEvent ORDER BY dtResult DESC");
 
-			return db.QuerySingleOrDefault<QuizSummary>(sql.ToString(), new { idEvent = idEvent });
+			return db.Query<QuizSummary>(sql.ToString(), new { idEvent = idEvent });
 		}
 	}
 }
