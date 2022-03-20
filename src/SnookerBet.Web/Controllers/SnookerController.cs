@@ -125,8 +125,6 @@ namespace SnookerBet.Web.Controllers
 			}
 		}
 
-		//TODO: Get Today Match
-
 		[ApiExplorerSettings(IgnoreApi = true)]
 		public IActionResult HandleError(string apiName, Exception ex)
 		{

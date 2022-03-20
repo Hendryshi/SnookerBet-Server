@@ -33,8 +33,7 @@ namespace SnookerBet.Web.Controllers
 			{
 				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
 				_logger.LogInformation($"Api GetQuizEvent called - [{wechatId}]");
-				List<oQuiz> quiz = _quizService.GetAvailableQuiz();
-				return Ok(quiz);
+				return Ok(_quizService.GetAvailableQuiz());
 			}
 			catch(Exception ex)
 			{
@@ -153,7 +152,7 @@ namespace SnookerBet.Web.Controllers
 				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
 				_logger.LogInformation($"Api UpdateQuizPredict called - [{wechatId}]");
 
-				if(quizPredict == null || quizPredict.oGamer == null || string.IsNullOrEmpty(quizPredict.oGamer.WechatName))
+				if(quizPredict == null || quizPredict.oGamer == null || string.IsNullOrEmpty(quizPredict.oGamer.GamerName))
 					throw new ApplicationException("quizPredict not validate");
 
 				_quizService.UpdateQuizPredict(quizPredict);

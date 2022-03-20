@@ -1,5 +1,7 @@
 using Hangfire;
 using Hangfire.MemoryStorage;
+using Hangfire.SqlServer;
+using Hangfire.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +13,8 @@ using Microsoft.OpenApi.Models;
 using MovieManagerWeb;
 using Serilog;
 using SnookerBet.Core;
+using SnookerBet.Core.Enumerations;
+using SnookerBet.Core.Interfaces;
 using SnookerBet.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -55,7 +59,19 @@ namespace SnookerBet.Web
 				.UseDefaultTypeSerializer()
 				.UseMemoryStorage());
 
-			//TODO: Change to hangfireSql
+			services.AddHangfire(config =>
+				config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+				.UseSimpleAssemblyNameTypeSerializer()
+				.UseDefaultTypeSerializer()
+				.UseSqlServerStorage(_config.GetConnectionString("SnookerBetDB"), new SqlServerStorageOptions
+				{
+					CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+					SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+					QueuePollInterval = TimeSpan.Zero,
+					UseRecommendedIsolationLevel = true,
+					DisableGlobalLocks = true
+				}));
+
 			services.AddHangfireServer();
 
 			services.AddInfrastructureInjection(_config);
@@ -97,6 +113,34 @@ namespace SnookerBet.Web
 
 		public void ConfigureHangfireJob(IRecurringJobManager recurringJobManager, IServiceProvider serviceProvider)
 		{
+			using(var connection = JobStorage.Current.GetConnection())
+			{
+				foreach(var recurringJob in StorageConnectionExtensions.GetRecurringJobs(connection))
+				{
+					RecurringJob.RemoveIfExists(recurringJob.Id);
+				}
+			}
+
+			string recurringJobs = _config.GetSection("HangfireJob").GetValue<string>("RecurringJobs");
+			foreach(string recurringJob in recurringJobs.Split(';'))
+			{
+				HangfireJob hangfireJob;
+				string jobName = recurringJob.Split(':')[0].Trim();
+				string jobCron = recurringJob.Split(':')[1].Trim();
+
+				if(Enum.TryParse(jobName, true, out hangfireJob))
+				{
+					switch(hangfireJob)
+					{
+						case HangfireJob.UpdateEventInfo:
+							recurringJobManager.AddOrUpdate(jobName, () => serviceProvider.GetService<IJobService>().UpdateQuizEvent(), jobCron);
+							break;
+						case HangfireJob.CalculateScore:
+							recurringJobManager.AddOrUpdate(jobName, () => serviceProvider.GetService<IJobService>().CalculateGamerScore(), jobCron);
+							break;
+					}
+				}
+			}
 		}
 	}
 }

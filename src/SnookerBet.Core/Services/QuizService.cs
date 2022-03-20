@@ -50,7 +50,11 @@ namespace SnookerBet.Core.Services
 				if(evt != null)
 					oQuizzes.Add(ConvertHelper.ConverToOQuiz(evt, quiz));
 			}
-			return oQuizzes.OrderByDescending(q => q.IdQuiz).ToList();
+
+			if(oQuizzes.Count > 0)
+				oQuizzes = oQuizzes.OrderByDescending(q => q.IdQuiz).Take(1).ToList();
+
+			return oQuizzes;
 		}
 
 		public oQuizPredict GetQuizPredict(int idEvent, string wechatId, bool isReEdit = false)
@@ -83,8 +87,6 @@ namespace SnookerBet.Core.Services
 					oPredicts.Add(op);
 				}
 			}
-
-			
 			oMatch om = ConvertHelper.ConvertToOMatch(match);
 			if(r != null)
 				om.RoundName = r.RoundName.Translate("Round");
@@ -150,6 +152,10 @@ namespace SnookerBet.Core.Services
 			if(_quizRepo.FindByEvent(idEvent) != null)
 				throw new ApplicationException($"The quiz for Event[id={idEvent}] has already created");
 
+			Quiz lastQuiz = GetCurrentQuiz();
+			if(lastQuiz != null && lastQuiz.IdStatus != QuizStatus.Done)
+				throw new ApplicationException($"Another quiz has not been finished");
+
 			using(var trans = new TransactionScope())
 			{
 				Event evt = _snookerService.UpdateEventInfo(idEvent, true);
@@ -169,9 +175,13 @@ namespace SnookerBet.Core.Services
 
 		public List<QuizSummary> GetQuizSummary(int? idEvent = null)
 		{
+			List<QuizSummary> quizSummaries = new List<QuizSummary>();
 			if(idEvent == null) idEvent = GetCurrentQuiz()?.IdEvent;
 
-			return _quizRepo.GetQuizSummary(idEvent.Value);
+			if(idEvent != null)
+				quizSummaries = _quizRepo.GetQuizSummary(idEvent.Value);
+
+			return quizSummaries;
 		}
 		
 		public void UpdateQuizPredict(oQuizPredict quizPredict)
@@ -288,7 +298,8 @@ namespace SnookerBet.Core.Services
 				}
 			}
 
-			summary.DescMatchSummary = summary.DescMatchSummary.TrimEnd().TrimEnd(',');
+			if(!string.IsNullOrEmpty(summary.DescMatchSummary))
+				summary.DescMatchSummary = summary.DescMatchSummary.TrimEnd().TrimEnd(',');
 
 			_logger.LogInformation($"{nbTreated} matches have been treated");
 
@@ -304,7 +315,8 @@ namespace SnookerBet.Core.Services
 					gamer.TotalScore += gamerScore.Value;
 					_gamerRepo.Save(gamer);
 				}
-				summary.DescPointSummary = summary.DescPointSummary.TrimEnd().TrimEnd(',');
+				if(!string.IsNullOrEmpty(summary.DescPointSummary))
+					summary.DescPointSummary = summary.DescPointSummary.TrimEnd().TrimEnd(',');
 				_quizRepo.SaveSummary(summary);
 			}
 

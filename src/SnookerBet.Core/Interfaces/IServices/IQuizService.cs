@@ -8,7 +8,6 @@ namespace SnookerBet.Core.Interfaces
 	public interface IQuizService
 	{
 		Quiz CreateQuiz(int idEvent);
-		List<oQuiz> GetAvailableQuiz();
 		oQuizMatch GetQuizMatch(int idEvent, int idRound, int idNumber);
 		void UpdateQuizPredict(oQuizPredict quizPredict);
 		List<oPredictGamerTrend> GetPredictTrending(int? idEvent = null);
@@ -16,5 +15,7 @@ namespace SnookerBet.Core.Interfaces
 		void CalculateGamerScore(DateTime? dtStamp = null);
 		oQuizPredict GetQuizPredict(int idEvent, string wechatId, bool isReEdit = false);
 		List<QuizSummary> GetQuizSummary(int? idEvent = null);
+		Quiz GetCurrentQuiz();
+		List<oQuiz> GetAvailableQuiz();
 	}
 }

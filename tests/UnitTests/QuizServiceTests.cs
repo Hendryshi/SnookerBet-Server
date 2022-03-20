@@ -87,8 +87,6 @@ namespace UnitTests
 		public void TestGetAvailableQuiz()
 		{
 			List<oQuiz> oQuizzes = _quizService.GetAvailableQuiz();
-			Assert.Single(oQuizzes);
-			oQuizzes.ForEach(q => _output.WriteLine(q.ToString()));
 		}
 
 		[Fact]
@@ -144,7 +142,7 @@ namespace UnitTests
 		[Fact]
 		public void TestInsertSummary()
 		{
-			QuizSummary summary = new QuizSummary() { IdEvent = 1014, DtResult = DateTime.Now, DescSummary = "test" };
+			QuizSummary summary = new QuizSummary() { IdEvent = 1014, DtResult = DateTime.Now, DescMatchSummary = "test" };
 			QuizRepo quizRepo = new QuizRepoBuilder().Build();
 			quizRepo.SaveSummary(summary);
 		}
