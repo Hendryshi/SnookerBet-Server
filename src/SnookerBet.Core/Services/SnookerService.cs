@@ -154,7 +154,7 @@ namespace SnookerBet.Core.Services
 			_playerRepo.Save(pl);
 		}
 
-		public Event UpdateEventInfo(int idEvent)
+		public Event UpdateEventInfo(int idEvent, bool isInit = false)
 		{
 			_logger?.LogInformation("Start update event and details info for event [id={0}] ", idEvent);
 			Event evt = _externalDataService.GetEvent(idEvent);
@@ -171,7 +171,8 @@ namespace SnookerBet.Core.Services
 			if(matches == null || matches.Count == 0)
 				throw new ApplicationException($"Cannot find any match for event [id={idEvent}] from external api");
 
-			UpdatePlayersInEvent(idEvent);
+			if(isInit)
+				UpdatePlayersInEvent(idEvent);
 
 			foreach(Match m in matches.FindAll(m => m.IdEvent == idEvent))
 			{
@@ -199,6 +200,7 @@ namespace SnookerBet.Core.Services
 				evt.EventMatches.Add(mInDb);
 			}
 
+			_logger?.LogInformation("End update event and details info for event [id={0}] ", idEvent);
 			return _eventRepo.Save(evt, false);
 		}
 

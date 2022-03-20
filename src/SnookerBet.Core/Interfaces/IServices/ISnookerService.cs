@@ -13,7 +13,7 @@ namespace SnookerBet.Core.Interfaces
 		Match GetMatchInfo(int idEvent, int idRound, int idNumber);
 		List<oMatch> GetOnGoingMatch();
 		EventRound GetRoundInfo(int idEvent, int idRound);
-		Event UpdateEventInfo(int idEvent);
+		Event UpdateEventInfo(int idEvent, bool isInit = false);
 		void UpdateEventsInSeason(int season);
 		void UpdatePlayerById(int idPlayer);
 		void UpdatePlayersInEvent(int idEvent);

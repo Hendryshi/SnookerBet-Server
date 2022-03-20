@@ -152,7 +152,7 @@ namespace SnookerBet.Core.Services
 
 			using(var trans = new TransactionScope())
 			{
-				Event evt = _snookerService.UpdateEventInfo(idEvent);
+				Event evt = _snookerService.UpdateEventInfo(idEvent, true);
 				
 				int idRoundMin = evt.EventRounds.First().IdRound;
 
