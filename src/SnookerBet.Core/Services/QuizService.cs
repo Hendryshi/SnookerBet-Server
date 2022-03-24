@@ -230,6 +230,8 @@ namespace SnookerBet.Core.Services
 			Dictionary<int, int> gamerScoreDic = new Dictionary<int, int>();
 			QuizSummary summary = new QuizSummary() { DtResult = dtStamp.Value };
 
+			List<Predict> allPredicts = new List<Predict>();
+
 			foreach(Match match in matches)
 			{
 				List<Predict> predicts = _predictRepo.FindByMatch(match.IdEvent, match.IdRound, match.Number).FindAll(p => p.idStatus != PredictStatus.Ended);
@@ -294,18 +296,26 @@ namespace SnookerBet.Core.Services
 					}
 
 					nbTreated += 1;
-					_predictRepo.SaveList(predicts);
+					allPredicts.AddRange(predicts);
 				}
 			}
 
 			if(!string.IsNullOrEmpty(summary.DescMatchSummary))
+			{
 				summary.DescMatchSummary = summary.DescMatchSummary.TrimEnd().TrimEnd(',');
+				_logger.LogInformation($"DescMatchSummary: {summary.DescMatchSummary}");
+			}
 
-			_logger.LogInformation($"{nbTreated} matches have been treated");
+
+			_logger.LogInformation($"{nbTreated} matches have been treated. Now save all the predicts");
+			
+			if(allPredicts.Count > 0)
+				_predictRepo.SaveList(allPredicts);
 
 			if(gamerScoreDic.Count > 0)
 			{
 				_logger.LogInformation("Saving gamers");
+				List<Gamer> gamers = new List<Gamer>();
 				foreach(KeyValuePair<int, int> gamerScore in gamerScoreDic)
 				{
 					Gamer gamer = _gamerRepo.FindById(gamerScore.Key);
@@ -313,10 +323,18 @@ namespace SnookerBet.Core.Services
 					summary.DescPointSummary += $"{gamer.GamerName}: {gamerScore.Value},   ";
 
 					gamer.TotalScore += gamerScore.Value;
-					_gamerRepo.Save(gamer);
+					gamers.Add(gamer);
 				}
+
 				if(!string.IsNullOrEmpty(summary.DescPointSummary))
+				{
 					summary.DescPointSummary = summary.DescPointSummary.TrimEnd().TrimEnd(',');
+					_logger.LogInformation($"DescPointSummary: {summary.DescPointSummary}");
+				}
+
+				if(gamers.Count > 0)
+					_gamerRepo.SaveList(gamers);
+
 				_quizRepo.SaveSummary(summary);
 			}
 

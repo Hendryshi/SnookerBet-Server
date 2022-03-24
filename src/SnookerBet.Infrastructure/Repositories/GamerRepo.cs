@@ -44,6 +44,19 @@ namespace SnookerBet.Infrastructure.Repositories
 			return gamer;
 		}
 
+		public List<Gamer> SaveList(List<Gamer> gamers, bool updatePredict = false)
+		{
+			List<Gamer> lstGamers = new List<Gamer>();
+			using(var trans = new TransactionScope())
+			{
+				foreach(Gamer g in gamers)
+					lstGamers.Add(Save(g, updatePredict));
+
+				trans.Complete();
+			}
+			return lstGamers;
+		}
+
 		public Gamer FindById(int idGamer)
 		{
 			return db.GetEntityById<Gamer>(idGamer);

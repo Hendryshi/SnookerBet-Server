@@ -10,5 +10,6 @@ namespace SnookerBet.Core.Interfaces
 		Gamer FindById(int idGamer);
 		List<Gamer> LoadAllByEvent(int idEvent, bool loadPredict = true);
 		Gamer Save(Gamer gamer, bool updatePredict = false);
+		List<Gamer> SaveList(List<Gamer> gamers, bool updatePredict = false);
 	}
 }

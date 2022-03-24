@@ -111,12 +111,12 @@ namespace SnookerBet.Web.Controllers
 
 		[HttpPost]
 		[Route("UpdateEvent/{idEvent}")]
-		public IActionResult UpdateEventInfo(int idEvent)
+		public IActionResult UpdateEventInfo(int idEvent, bool initPlayer = false)
 		{
 			try
 			{
 				_logger.LogInformation($"Api UpdateEventInfo called: season[{idEvent}]");	
-				_snookerService.UpdateEventInfo(idEvent);
+				_snookerService.UpdateEventInfo(idEvent, initPlayer);
 				return Ok($"Event[{idEvent}] and its matches have been updated in DB");
 			}
 			catch(Exception ex)

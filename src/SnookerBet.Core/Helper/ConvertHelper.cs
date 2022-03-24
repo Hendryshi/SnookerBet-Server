@@ -132,8 +132,8 @@ namespace SnookerBet.Core.Helper
 			{
 				IdPlayer = player.IdPlayer,
 				Name = string.IsNullOrEmpty(player.ChineseName) ? (player.LastName ?? player.FirstName) : player.ChineseName,
-				Photo = player.Photo,
-				Rank = player.SeasonRank
+				Photo = player.Photo ?? "",
+				Rank = player.SeasonRank ?? 0
 			};
 		}
 
@@ -150,12 +150,14 @@ namespace SnookerBet.Core.Helper
 					oPredict.Score1 = 0;
 					oPredict.Score2 = 0;
 				}
+				else
+					oPredict.PredictStatus = PredictStatus.Ended;
 
 				//if(predict != null)
 				//{
 				//	oPredict.IdPredict = predict.IdPredict;
 				//	oPredict.IdGamer = predict.IdGamer;
-				//}
+				//}					
 			}
 			else
 			{
@@ -164,9 +166,6 @@ namespace SnookerBet.Core.Helper
 				oPredict.StMatch = oMatch.StMatch;
 				oPredict.note = oMatch.note;
 			}
-
-			if(oMatch.StMatch == MatchStatus.Ended)
-				oPredict.PredictStatus = PredictStatus.Ended;
 
 			return oPredict;
 		}

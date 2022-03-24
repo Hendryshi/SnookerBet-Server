@@ -29,7 +29,7 @@ AS
 GO
 
 GO
-CREATE PROCEDURE GetOnGoingMatch
+ALTER PROCEDURE GetOnGoingMatch
 	@dtStamp DATETIME = NULL,
 	@idEvent INT = 0
 AS
@@ -40,7 +40,7 @@ AS
 	WHERE m.idEvent IN (SELECT idEvent FROM G_Quiz WHERE idStatus <> -1)
 	AND (m.idEvent = @idEvent OR @idEvent = 0)
 	AND m.startDate IS NOT NULL AND (m.endDate IS NULL OR DATEDIFF(HOUR, m.endDate, @dtStamp) BETWEEN 0 AND 12)
-	ORDER BY startDate, endDate ASC
+	ORDER BY ISNULL(endDate,'3000-01-01') DESC
 GO
 
 GO

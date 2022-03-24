@@ -35,7 +35,7 @@ namespace SnookerBet.Core.Services
 		{
 			Quiz quiz = _quizService.GetCurrentQuiz();
 
-			if(quiz != null && quiz.IdStatus != QuizStatus.Done)
+			if(quiz != null && quiz.IdStatus != QuizStatus.Done && quiz.IdStatus != QuizStatus.OpenPredict)
 				_snookerService.UpdateEventInfo(quiz.IdEvent);
 		}
 
