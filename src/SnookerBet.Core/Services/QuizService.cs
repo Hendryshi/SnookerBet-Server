@@ -40,6 +40,11 @@ namespace SnookerBet.Core.Services
 			_quizSettings = quizSettings.Value;
 		}
 
+		public Quiz Save(Quiz quiz)
+		{
+			return _quizRepo.Save(quiz);
+		}
+
 		public List<oQuiz> GetAvailableQuiz()
 		{
 			List<oQuiz> oQuizzes = new List<oQuiz>();
@@ -190,7 +195,7 @@ namespace SnookerBet.Core.Services
 			oGamer oGamer = quizPredict.oGamer;
 			Gamer gamer = _gamerRepo.FindByEventAndName(idEvent, oGamer.WechatName, false);
 			if(gamer == null)
-				gamer = new Gamer() { IdEvent = idEvent, WechatName = oGamer.WechatName, GamerName = oGamer.GamerName };
+				gamer = new Gamer() { IdEvent = idEvent, WechatName = oGamer.WechatName, WechatCode = oGamer.WechatCode, GamerName = oGamer.GamerName };
 			else
 				gamer.NbEditPredict++;
 
@@ -206,18 +211,18 @@ namespace SnookerBet.Core.Services
 			_gamerRepo.Save(gamer, true);
 		}
 
-		public void CalculateGamerScore(DateTime? dtStamp = null)
+		public void CalculateGamerScore(int idEvent = 0, DateTime? dtStamp = null)
 
 		{
 			if(dtStamp == null) dtStamp = DateTime.Now;
 
 			_logger.LogInformation("************************************************************");
 			_logger.LogInformation("************************************************************");
-			_logger.LogInformation($"Start calcuate the score for ended match in day - {dtStamp}");
+			_logger.LogInformation($"Start calcuate the score for ended match in day [{dtStamp} - IdEvent: {idEvent}]");
 			_logger.LogInformation("************************************************************");
 			_logger.LogInformation("************************************************************");
 
-			List<Match> matches = _snookerService.GetEndedMatchInDay(dtStamp);
+			List<Match> matches = _snookerService.GetEndedMatchInDay(idEvent, dtStamp);
 			if(matches.Count == 0)
 			{
 				_logger.LogInformation($"No match has been found ended in day");

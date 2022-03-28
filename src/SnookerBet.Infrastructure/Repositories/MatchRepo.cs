@@ -88,10 +88,10 @@ namespace SnookerBet.Infrastructure.Repositories
 			return matches;
 		}
 
-		public List<Match> GetEndedMatchInDay(DateTime dtStamp)
+		public List<Match> GetEndedMatchInDay(int idEvent, DateTime dtStamp)
 		{
 			var sql = new StringBuilder();
-			sql.AppendFormat("EXECUTE GetEndedMatchInDay @dtStamp = '{0}'", dtStamp);
+			sql.AppendFormat("EXECUTE GetEndedMatchInDay @idEvent = {0} @dtStamp = '{1}'", idEvent, dtStamp);
 
 			List<Match> matches = db.Query<Match>(sql.ToString());
 			matches.ForEach(m => m.Player1 = _playerRepo.FindById(m.Player1Id));

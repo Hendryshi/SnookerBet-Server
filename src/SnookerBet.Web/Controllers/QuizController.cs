@@ -166,13 +166,13 @@ namespace SnookerBet.Web.Controllers
 
 		[HttpPost]
 		[Route("CalculateGamerScore")]
-		public IActionResult CalculateGamerScore(DateTime? dtStamp = null)
+		public IActionResult CalculateGamerScore(int idEvent = 0, DateTime? dtStamp = null)
 		{
 			try
 			{
 				string wechatId = Request.Headers.FirstOrDefault(x => x.Key == "WechatId").Value.FirstOrDefault();
-				_logger.LogInformation($"Api CalculateGamerScore called - dtStamp={dtStamp} - [{wechatId}]");
-				_quizService.CalculateGamerScore(dtStamp);
+				_logger.LogInformation($"Api CalculateGamerScore called - idEvent={idEvent} - dtStamp={dtStamp} - [{wechatId}]");
+				_quizService.CalculateGamerScore(idEvent, dtStamp);
 				return Ok("Calculate gamer score finished");
 			}
 			catch(Exception ex)

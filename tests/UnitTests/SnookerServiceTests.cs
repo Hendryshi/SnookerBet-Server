@@ -79,7 +79,7 @@ namespace UnitTests
 			MatchRepo matchRepo = new MatchRepoBuilder().Build();
 			DateTime date = new DateTime(2022, 3, 2);
 
-			List<SnookerBet.Core.Entities.Match> matches = matchRepo.GetEndedMatchInDay(date);
+			List<SnookerBet.Core.Entities.Match> matches = matchRepo.GetEndedMatchInDay(0, date);
 			Assert.Equal(19, matches.Count);
 		}
 	}

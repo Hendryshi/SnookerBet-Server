@@ -41,7 +41,18 @@ namespace SnookerBet.Core.Services
 
 		public void CalculateGamerScore()
 		{
-			_quizService.CalculateGamerScore();
+			Quiz quiz = _quizService.GetCurrentQuiz();
+			if(quiz.IdStatus != QuizStatus.Done)
+			{
+				_quizService.CalculateGamerScore();
+				Event curEvent = _snookerService.GetEventById(quiz.IdEvent, true);
+				if(curEvent.EventMatches.Find(m => m.EndDate != null) == null)
+				{
+					_logger.LogInformation($"All matches have been finished in event {quiz.IdEvent}. Update Quiz Status to DONE");
+					quiz.IdStatus = QuizStatus.Done;
+					_quizService.Save(quiz);
+				}
+			}
 		}
 	}
 }

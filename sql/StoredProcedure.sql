@@ -17,13 +17,15 @@ AS
 GO
 
 GO
-CREATE PROCEDURE GetEndedMatchInDay
+ALTER PROCEDURE GetEndedMatchInDay
+	@idEvent INT = 0,
 	@dtStamp DATETIME = NULL
 AS
 	SET @dtStamp = ISNULL(@dtStamp, GETDATE())
 
 	SELECT * FROM S_Match 
 	WHERE idEvent IN (SELECT idEvent FROM G_Quiz WHERE idStatus <> -1)
+	AND (idEvent = @idEvent OR @idEvent = 0)
 	AND startDate IS NOT NULL AND endDate IS NOT NULL
 	AND DATEDIFF(HOUR, endDate, @dtStamp) BETWEEN 0 AND 24
 GO

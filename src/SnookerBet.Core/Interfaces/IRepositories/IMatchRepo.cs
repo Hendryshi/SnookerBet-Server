@@ -15,6 +15,6 @@ namespace SnookerBet.Core.Interfaces
 		List<Match> FindByEvent(int idEvent);
 		Match FindById(int idEvent, int idRound, int idNumber);
 		List<Match> GetOnGoingMatches();
-		List<Match> GetEndedMatchInDay(DateTime dtStamp);
+		List<Match> GetEndedMatchInDay(int idEvent, DateTime dtStamp);
 	}
 }

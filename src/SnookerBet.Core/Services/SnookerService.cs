@@ -77,10 +77,10 @@ namespace SnookerBet.Core.Services
 			return oMatches;
 		}
 
-		public List<Match> GetEndedMatchInDay(DateTime? dtStamp = null)
+		public List<Match> GetEndedMatchInDay(int idEvent, DateTime? dtStamp = null)
 		{
 			if(dtStamp == null) dtStamp = DateTime.Now;
-			return _matchRepo.GetEndedMatchInDay(dtStamp.Value);
+			return _matchRepo.GetEndedMatchInDay(idEvent, dtStamp.Value);
 		}
 
 		public void UpdateEventsInSeason(int season)
