@@ -11,6 +11,7 @@ namespace SnookerBet.Core
 			services.AddTransient<IExternalDataService, Services.ExternalDataService>();
 			services.AddTransient<ISnookerService, Services.SnookerService>();
 			services.AddTransient<IQuizService, Services.QuizService>();
+			services.AddTransient<IWechatService, Services.WechatService>();
 			services.AddTransient<IJobService, Services.JobService>();
 			return services;
 		}

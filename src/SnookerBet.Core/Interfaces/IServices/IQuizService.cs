@@ -18,5 +18,6 @@ namespace SnookerBet.Core.Interfaces
 		List<oQuiz> GetAvailableQuiz();
 		void CalculateGamerScore(int idEvent = 0, DateTime? dtStamp = null);
 		Quiz Save(Quiz quiz);
+		void SendNotification();
 	}
 }

@@ -46,9 +46,10 @@ namespace SnookerBet.Core.Services
 			{
 				_quizService.CalculateGamerScore();
 				Event curEvent = _snookerService.GetEventById(quiz.IdEvent, true);
-				if(curEvent.EventMatches.Find(m => m.EndDate != null) == null)
+				if(!curEvent.EventMatches.Exists(m => m.EndDate == null))
 				{
 					_logger.LogInformation($"All matches have been finished in event {quiz.IdEvent}. Update Quiz Status to DONE");
+					quiz.DtEnd = DateTime.Now;
 					quiz.IdStatus = QuizStatus.Done;
 					_quizService.Save(quiz);
 				}

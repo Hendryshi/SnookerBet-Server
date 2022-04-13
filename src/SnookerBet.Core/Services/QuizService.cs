@@ -22,6 +22,7 @@ namespace SnookerBet.Core.Services
 		private readonly IQuizRepo  _quizRepo;
 		private readonly IGamerRepo _gamerRepo;
 		private readonly IPredictRepo _predictRepo;
+		private readonly IWechatService _wechatService;
 		private readonly IAppLogger<QuizService> _logger;
 		private readonly QuizSettings _quizSettings;
 
@@ -30,6 +31,7 @@ namespace SnookerBet.Core.Services
 			IQuizRepo quizRepo,
 			IGamerRepo gamerRepo, 
 			IPredictRepo predictRepo,
+			IWechatService wechatService,
 			IOptionsSnapshot<QuizSettings> quizSettings)
 		{
 			_snookerService = snookerService;
@@ -37,6 +39,7 @@ namespace SnookerBet.Core.Services
 			_gamerRepo = gamerRepo;
 			_predictRepo = predictRepo;
 			_logger = logger;
+			_wechatService = wechatService;
 			_quizSettings = quizSettings.Value;
 		}
 
@@ -195,7 +198,12 @@ namespace SnookerBet.Core.Services
 			oGamer oGamer = quizPredict.oGamer;
 			Gamer gamer = _gamerRepo.FindByEventAndName(idEvent, oGamer.WechatName, false);
 			if(gamer == null)
-				gamer = new Gamer() { IdEvent = idEvent, WechatName = oGamer.WechatName, WechatCode = oGamer.WechatCode, GamerName = oGamer.GamerName };
+			{
+				gamer = new Gamer() { IdEvent = idEvent, WechatName = oGamer.WechatName, GamerName = oGamer.GamerName };
+				string openId = _wechatService.GetUserOpenId(oGamer.WechatCode);
+				if(!string.IsNullOrEmpty(openId))
+					gamer.WechatCode = openId;
+			}
 			else
 				gamer.NbEditPredict++;
 
@@ -209,6 +217,47 @@ namespace SnookerBet.Core.Services
 			}
 
 			_gamerRepo.Save(gamer, true);
+		}
+
+		public void SendNotification()
+		{
+			int? idEvent = GetCurrentQuiz()?.IdEvent;
+			if(idEvent != null)
+			{
+				string token = _wechatService.GetAccessToken();
+				if(string.IsNullOrEmpty(token))
+					throw new ApplicationException($"Cannot get wechat token");
+
+				List <Gamer> gamers = _gamerRepo.LoadAllByEvent(idEvent.Value, false).OrderByDescending(g => g.TotalScore).ToList();
+				int index = 0;
+				foreach(Gamer gamer in gamers)
+				{
+					index++;
+					if(gamer.WechatCode == null)
+					{
+						_logger.LogWarning($"Gamer {gamer.WechatName} have not wechat code");
+						continue;
+					}
+
+					if(gamer.NbEditPredict > 0)
+					{
+						_logger.LogWarning($"Gamer {gamer.WechatName} has already changed his predict");
+						continue;
+					}
+
+					_logger.LogInformation($"Send notification for gamer {gamer.WechatName}");
+
+					WechatNotif wn = new WechatNotif(){ touser = gamer.WechatCode };
+					var data = new
+					{
+						thing2 = new { value = "您可以开始第二次竞猜预测" },
+						thing3 = new { value = $"您目前的积分为{gamer.TotalScore} 您目前的排名为第{index}名" },
+					};
+					wn.data = data;
+
+					_wechatService.SendNotification(token, wn);
+				}
+			}
 		}
 
 		public void CalculateGamerScore(int idEvent = 0, DateTime? dtStamp = null)

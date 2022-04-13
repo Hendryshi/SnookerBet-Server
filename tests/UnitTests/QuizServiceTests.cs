@@ -146,5 +146,14 @@ namespace UnitTests
 			QuizRepo quizRepo = new QuizRepoBuilder().Build();
 			quizRepo.SaveSummary(summary);
 		}
+
+		[Fact]
+		public void TestJobCalculateScore()
+		{
+			var logger = new LoggerBuilder<JobService>().Build();
+			var snookerService = new SnookerServiceBuilder().Build();
+			JobService jobService = new JobService(logger, snookerService, _quizService);
+			jobService.CalculateGamerScore();
+		}
 	}
 }

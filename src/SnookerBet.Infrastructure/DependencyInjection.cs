@@ -12,6 +12,7 @@ namespace SnookerBet.Infrastructure
 		{
 			services.Configure<SnookerOrgSettings>(_config.GetSection("SnookerOrgSettings"));
 			services.Configure<QuizSettings>(_config.GetSection("QuizSettings"));
+			services.Configure<WechatSettings>(_config.GetSection("WechatSettings"));
 
 			services.AddScoped<DbContext.DapperContext>();
 			services.AddScoped(typeof(IAppLogger<>), typeof(Logging.LoggerAdapter<>));

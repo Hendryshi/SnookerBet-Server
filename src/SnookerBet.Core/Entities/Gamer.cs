@@ -16,6 +16,7 @@ namespace SnookerBet.Core.Entities
 		public int IdGamer { get; set; }
 		public int IdEvent { get; set; }
 		public string WechatName { get; set; }
+		public string WechatCode { get; set; }
 		public string GamerName { get; set; }
 		public int TotalScore { get; set; }
 		public short NbEditPredict { get; set; }

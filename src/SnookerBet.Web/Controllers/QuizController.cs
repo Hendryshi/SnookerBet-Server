@@ -165,6 +165,23 @@ namespace SnookerBet.Web.Controllers
 		}
 
 		[HttpPost]
+		[Route("SendNotification")]
+		public IActionResult SendNotification()
+		{
+			try
+			{
+				_logger.LogInformation($"Api SendNotification called");
+
+				_quizService.SendNotification();
+				return Ok("Notification has been sent");
+			}
+			catch(Exception ex)
+			{
+				return HandleError("SendNotification", ex);
+			}
+		}
+
+		[HttpPost]
 		[Route("CalculateGamerScore")]
 		public IActionResult CalculateGamerScore(int idEvent = 0, DateTime? dtStamp = null)
 		{

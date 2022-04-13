@@ -220,6 +220,7 @@ namespace SnookerBet.Core.Helper
 				IdEvent = gm.IdEvent,
 				GamerName = gm.GamerName,
 				WechatName = gm.WechatName,
+				WechatCode = gm.WechatCode,
 				NbEditPredict = gm.NbEditPredict
 			};
 		}
