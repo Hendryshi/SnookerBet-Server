@@ -248,10 +248,11 @@ namespace SnookerBet.Core.Services
 					_logger.LogInformation($"Send notification for gamer {gamer.WechatName}");
 
 					WechatNotif wn = new WechatNotif(){ touser = gamer.WechatCode };
+					string rank = $"您目前的排名为第{index}名";
 					var data = new
 					{
 						thing2 = new { value = "您可以开始第二次竞猜预测" },
-						thing3 = new { value = $"您目前的积分为{gamer.TotalScore} 您目前的排名为第{index}名" },
+						thing3 = new { value = rank },
 					};
 					wn.data = data;
 

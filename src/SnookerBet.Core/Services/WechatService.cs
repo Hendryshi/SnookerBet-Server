@@ -79,6 +79,7 @@ namespace SnookerBet.Core.Services
 		{
 			wn.miniprogram_state = _wechatSettings.State;
 			wn.template_id = _wechatSettings.TemplateId;
+			wn.page = "pages/home/home";
 			
 			using(HttpClient client = new HttpClient())
 			{
