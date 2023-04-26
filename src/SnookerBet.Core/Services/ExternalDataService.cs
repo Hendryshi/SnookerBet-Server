@@ -30,7 +30,7 @@ namespace SnookerBet.Core.Services
 			{
 				client.BaseAddress = new Uri(url);
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+				client.DefaultRequestHeaders.Add("X-Requested-by", "YejiaShi");
 				// List data response.
 				HttpResponseMessage response = client.GetAsync(urlParam).Result;
 

@@ -321,7 +321,7 @@ namespace SnookerBet.Core.Services
 						if(p.WinnerId == match.WinnerId)
 						{
 							p.WinnerCorrect = true;
-							point += winnerPoint;
+							point += winnerPoint * coef;
 
 							if(p.IdRound == 13)
 								point += _quizSettings.QuarterFinalScore;
@@ -334,10 +334,10 @@ namespace SnookerBet.Core.Services
 						if(p.Player1Id == match.Player1Id && p.Player2Id == match.Player2Id && p.Score1 == match.Score1 && p.Score2 == match.Score2)
 						{
 							p.ScoreCorrect = true;
-							point += scorePoint;
+							point += scorePoint * coef;
 						}
 
-						int finalPoint = (int)Math.Round((point * coef));
+						int finalPoint = (int)Math.Round(point);
 						p.Point = finalPoint;
 						p.DtResult = dtStamp;
 						p.idStatus = PredictStatus.Ended;
